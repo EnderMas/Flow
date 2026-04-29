@@ -1,0 +1,1217 @@
+<html lang="zh-CN" style="--header-timer-scale: 1; --header-timer-x: 0px; --star-ddl-color-normal: #ef4444; --star-ddl-color-running: #ffffff; --star-ddl-shadow: 2px 2px 8px rgba(0,0,0,0.9); --greeting-size: 8rem;"><head><script>(function(firebaseConfig, initialAuthToken, appId) {
+        window.__firebase_config = firebaseConfig;
+        window.__initial_auth_token = initialAuthToken;
+        window.__app_id = appId;
+            })("\n{\n  \"apiKey\": \"AIzaSyCqyCcs2R2e7AegGjvFAwG98wlamtbHvZY\",\n  \"authDomain\": \"bard-frontend.firebaseapp.com\",\n  \"projectId\": \"bard-frontend\",\n  \"storageBucket\": \"bard-frontend.firebasestorage.app\",\n  \"messagingSenderId\": \"175205271074\",\n  \"appId\": \"1:175205271074:web:2b7bd4d34d33bf38e6ec7b\"\n}\n","eyJhbGciOiJSUzI1NiIsImtpZCI6ImQzMmE5NGU0NjFmNjZhODQ0YWFhYTY1NjdiZWM4OWY2NWIzMzg0ODQiLCJ0eXAiOiJKV1QifQ.eyJzdWIiOiJmaXJlYmFzZS1hZG1pbnNkay1mYnN2Y0BiYXJkLWZyb250ZW5kLmlhbS5nc2VydmljZWFjY291bnQuY29tIiwiYXVkIjoiaHR0cHM6Ly9pZGVudGl0eXRvb2xraXQuZ29vZ2xlYXBpcy5jb20vZ29vZ2xlLmlkZW50aXR5LmlkZW50aXR5dG9vbGtpdC52MS5JZGVudGl0eVRvb2xraXQiLCJ1aWQiOiIxMzIzMDc2Mzc0MDcxMzM5Nzk0NCIsImlzcyI6ImZpcmViYXNlLWFkbWluc2RrLWZic3ZjQGJhcmQtZnJvbnRlbmQuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJjbGFpbXMiOnsiYXBwSWQiOiJjX2I0NDU2ZDlkNmY1YjkzMGFfaW5kZXguaHRtbC0xIn0sImV4cCI6MTc3MzE2NDQ0OSwiaWF0IjoxNzczMTYwODQ5LCJhbGciOiJSUzI1NiJ9.dwrrHhmxAA6Bfu7PCXGUbLOAdJUUnGHorfr83t71oEFRMkeMXquIQAYo4drXvBIf_keOuTXMlknhiYj1iPmLxaTpc5o7ON2pT63Fo6kEPNekGqMXIL_5clpGMlqGkzzBpS9famdH14QarliorJrMBpn_KX8lIBIKfgej6ACc7fTz1_17APYaRFu3padzh7efwlDSmWlAG8h8m5pjYxhqGM5rHnB4zp4kIH6A86nyUMrd0Naef9LbSI85vZvN3aZb1ZI-Vk-T242D6pXhYiMdfvDprorbhmbvfZGYjrCPEpxzvifBDxk0kHl5-xdQxV0bc1dyDLmOzPr6jLwgPCEjaQ","c_b4456d9d6f5b930a_index.html-1")</script><script>(function(){'use strict';var h=typeof Object.defineProperties=="function"?Object.defineProperty:function(a,b,d){if(a==Array.prototype||a==Object.prototype)return a;a[b]=d.value;return a};function l(a){a=["object"==typeof globalThis&&globalThis,a,"object"==typeof window&&window,"object"==typeof self&&self,"object"==typeof global&&global];for(var b=0;b<a.length;++b){var d=a[b];if(d&&d.Math==Math)return d}throw Error("Cannot find global object");}var n=l(this);
+function p(a,b){if(b)a:{var d=n;a=a.split(".");for(var c=0;c<a.length-1;c++){var e=a[c];if(!(e in d))break a;d=d[e]}a=a[a.length-1];c=d[a];b=b(c);b!=c&&b!=null&&h(d,a,{configurable:!0,writable:!0,value:b})}}function r(a){function b(c){return a.next(c)}function d(c){return a.throw(c)}return new Promise(function(c,e){function f(g){g.done?c(g.value):Promise.resolve(g.value).then(b,d).then(f,e)}f(a.next())})}function t(a){return r(a())}
+p("Object.values",function(a){return a?a:function(b){var d=[],c;for(c in b)Object.prototype.hasOwnProperty.call(b,c)&&d.push(b[c]);return d}});p("Array.prototype.includes",function(a){return a?a:function(b,d){var c=this;c instanceof String&&(c=String(c));var e=c.length;d=d||0;for(d<0&&(d=Math.max(d+e,0));d<e;d++){var f=c[d];if(f===b||Object.is(f,b))return!0}return!1}});/*
+
+ MIT License
+
+ Copyright (c) 2017-2023 W.Y.
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+
+*/
+function u(a,b){const d=a.style;b.backgroundColor&&(d.backgroundColor=b.backgroundColor);b.width&&(d.width=`${b.width}px`);b.height&&(d.height=`${b.height}px`);const c=b.style;c!=null&&Object.keys(c).forEach(e=>{d[e]=c[e]})};var v=(()=>{let a=0;return()=>{a+=1;return`u${`0000${(Math.random()*1679616<<0).toString(36)}`.slice(-4)}${a}`}})();function w(a){const b=[];for(let d=0,c=a.length;d<c;d++)b.push(a[d]);return b}let x=null;function y(a={}){return x?x:a.l?x=a.l:x=w(window.getComputedStyle(document.documentElement))}function z(a,b){return(a=(a.ownerDocument.defaultView||window).getComputedStyle(a).getPropertyValue(b))?parseFloat(a.replace("px","")):0}
+function A(a,b={}){var d;if(!(d=b.width)){d=z(a,"border-left-width");var c=z(a,"border-right-width");d=a.clientWidth+d+c}(b=b.height)||(b=z(a,"border-top-width"),c=z(a,"border-bottom-width"),b=a.clientHeight+b+c);return{width:d,height:b}}function B(a){return new Promise((b,d)=>{const c=new Image;c.onload=()=>{c.decode().then(()=>{requestAnimationFrame(()=>b(c))})};c.onerror=d;c.crossOrigin="anonymous";c.decoding="async";c.src=a})}
+function C(a){return t(function*(){return Promise.resolve().then(()=>(new XMLSerializer).serializeToString(a)).then(encodeURIComponent).then(b=>`data:image/svg+xml;charset=utf-8,${b}`)})}
+function D(a,b,d){return t(function*(){const c=document.createElementNS("http://www.w3.org/2000/svg","svg"),e=document.createElementNS("http://www.w3.org/2000/svg","foreignObject");c.setAttribute("width",`${b}`);c.setAttribute("height",`${d}`);c.setAttribute("viewBox",`0 0 ${b} ${d}`);e.setAttribute("width","100%");e.setAttribute("height","100%");e.setAttribute("x","0");e.setAttribute("y","0");e.setAttribute("externalResourcesRequired","true");c.appendChild(e);e.appendChild(a);return C(c)})}
+var E=(a,b)=>{if(a instanceof b)return!0;a=Object.getPrototypeOf(a);return a===null?!1:a.constructor.name===b.name||E(a,b)};function F(a,b){return y(b).map(d=>{const c=a.getPropertyValue(d),e=a.getPropertyPriority(d);return`${d}: ${c}${e?" !important":""};`}).join(" ")}
+function G(a,b,d,c){a=window.getComputedStyle(a,d);var e=a.getPropertyValue("content");if(e!==""&&e!=="none"){var f=v();try{b.className=`${b.className} ${f}`}catch(k){return}e=document.createElement("style");var g=e.appendChild;d=`.${f}:${d}`;a.cssText?(c=a.getPropertyValue("content"),c=`${a.cssText} content: '${c.replace(/'|"/g,"")}';`):c=F(a,c);g.call(e,document.createTextNode(`${d}{${c}}`));b.appendChild(e)}};function H(a){return a.search(/^(data:)/)!==-1}function I(a,b,d){return t(function*(){const c=yield fetch(a,b);if(c.status===404)throw Error(`Resource "${c.url}" not found`);const e=yield c.blob();return new Promise((f,g)=>{const k=new FileReader;k.onerror=g;k.onloadend=()=>{try{f(d({o:c,result:k.result}))}catch(m){g(m)}};k.readAsDataURL(e)})})}const J={};function K(a,b,d){let c=a.replace(/\?.*/,"");d&&(c=a);/ttf|otf|eot|woff2?/i.test(c)&&(c=c.replace(/.*\//,""));return b?`[${b}]${c}`:c}
+function L(a,b,d){return t(function*(){const c=K(a,b,d.C);if(J[c]!=null)return J[c];d.u&&(a+=(/\?/.test(a)?"&":"?")+(new Date).getTime());let e;try{const f=yield I(a,d.i,({o:g,result:k})=>{b||(b=g.headers.get("Content-Type")||"");return k.split(/,/)[1]});e=`data:${b};base64,${f}`}catch(f){e=d.B||""}return J[c]=e})};const M={P:"application/font-woff",R:"application/font-woff",N:"application/font-truetype",v:"application/vnd.ms-fontobject",H:"image/png",F:"image/jpeg",D:"image/jpeg",A:"image/gif",M:"image/tiff",L:"image/svg+xml",O:"image/webp"};function N(a){return(a=/\.([^./]*?)$/g.exec(a))?a[1]:""};function O(a){return t(function*(){const b=a.toDataURL();return b==="data:,"?a.cloneNode(!1):B(b)})}function aa(a,b){return t(function*(){if(a.currentSrc){var d=document.createElement("canvas");const c=d.getContext("2d");d.width=a.clientWidth;d.height=a.clientHeight;c==null||c.drawImage(a,0,0,d.width,d.height);d=d.toDataURL();return B(d)}d=a.poster;d=yield L(d,M[N(d).toLowerCase()]||"",b);return B(d)})}
+function ba(a,b){return t(function*(){try{let d;if(a==null?0:(d=a.contentDocument)==null?0:d.body)return yield P(a.contentDocument.body,b,!0)}catch(d){}return a.cloneNode(!1)})}function ca(a,b){return t(function*(){return E(a,HTMLCanvasElement)?O(a):E(a,HTMLVideoElement)?aa(a,b):E(a,HTMLIFrameElement)?ba(a,b):a.cloneNode(a.tagName!=null&&a.tagName.toUpperCase()==="SVG")})}
+function da(a,b,d){return t(function*(){if(b.tagName!=null&&b.tagName.toUpperCase()==="SVG")return b;let c=[];if(a.tagName!=null&&a.tagName.toUpperCase()==="SLOT"&&a.assignedNodes)c=w(a.assignedNodes());else{let e;if(E(a,HTMLIFrameElement)&&((e=a.contentDocument)==null?0:e.body))c=w(a.contentDocument.body.childNodes);else{let f;c=w(((f=a.shadowRoot)!=null?f:a).childNodes)}}if(c.length===0||E(a,HTMLVideoElement))return b;yield c.reduce((e,f)=>e.then(()=>P(f,d)).then(g=>{g&&b.appendChild(g)}),Promise.resolve());
+return b})}function ea(a,b,d){const c=b.style;if(c){var e=window.getComputedStyle(a);e.cssText?(c.cssText=e.cssText,c.transformOrigin=e.transformOrigin):y(d).forEach(f=>{let g=e.getPropertyValue(f);f==="font-size"&&g.endsWith("px")&&(g=`${Math.floor(parseFloat(g.substring(0,g.length-2)))-.1}px`);E(a,HTMLIFrameElement)&&f==="display"&&g==="inline"&&(g="block");f==="d"&&b.getAttribute("d")&&(g=`path(${b.getAttribute("d")})`);c.setProperty(f,g,e.getPropertyPriority(f))})}}
+function fa(a,b){E(a,HTMLSelectElement)&&(b=Array.from(b.children).find(d=>a.value===d.getAttribute("value")))&&b.setAttribute("selected","")}
+function ha(a,b){return t(function*(){var d=a.querySelectorAll?a.querySelectorAll("use"):[];if(d.length===0)return a;var c={};for(var e=0;e<d.length;e++){var f=d[e].getAttribute("xlink:href");if(f){const g=document.querySelector(f);a.querySelector(f)||!g||c[f]||(c[f]=yield P(g,b,!0))}}d=Object.values(c);if(d.length){c=document.createElementNS("http://www.w3.org/1999/xhtml","svg");c.setAttribute("xmlns","http://www.w3.org/1999/xhtml");c.style.position="absolute";c.style.width="0";c.style.height="0";
+c.style.overflow="hidden";c.style.display="none";e=document.createElementNS("http://www.w3.org/1999/xhtml","defs");c.appendChild(e);for(f=0;f<d.length;f++)e.appendChild(d[f]);a.appendChild(c)}return a})}
+function P(a,b,d){return t(function*(){return d||!b.filter||b.filter(a)?Promise.resolve(a).then(c=>ca(c,b)).then(c=>da(a,c,b)).then(c=>{E(c,Element)&&(ea(a,c,b),G(a,c,":before",b),G(a,c,":after",b),E(a,HTMLTextAreaElement)&&(c.textContent=a.value),E(a,HTMLInputElement)&&c.setAttribute("value",a.value),fa(a,c));return c}).then(c=>ha(c,b)):null})};const Q=/url\((['"]?)([^'"]+?)\1\)/g,ia=/url\([^)]+\)\s*format\((["']?)([^"']+)\1\)/g,ja=/src:\s*(?:url\([^)]+\)\s*format\([^)]+\)[,;]\s*)+/g;function ka(a){const b=[];a.replace(Q,(d,c,e)=>{b.push(e);return d});return b.filter(d=>!H(d))}
+function la(a,b,d,c){return t(function*(){try{const e=d?(new URL(b,d||void 0)).toString():b;let f;f=yield L(e,M[N(b).toLowerCase()]||"",c);return a.replace(new RegExp(`(url\\(['"]?)(${b.replace(/([.*+?^${}()|\[\]\/\\])/g,"\\$1")})(['"]?\\))`,"g"),`$1${f}$3`)}catch(e){}return a})}function ma(a,{I:b}){return b?a.replace(ja,d=>{for(;;){const [c,,e]=ia.exec(d)||[],f=c,g=e;if(!g)return"";if(g===b)return`src: ${f};`}}):a}
+function R(a,b,d){return t(function*(){if(a.search(Q)===-1)return a;const c=ma(a,d);return ka(c).reduce((e,f)=>e.then(g=>la(g,f,b,d)),Promise.resolve(c))})};function S(a,b,d){return t(function*(){var c;const e=(c=b.style)==null?void 0:c.getPropertyValue(a);return e?(c=yield R(e,null,d),b.style.setProperty(a,c,b.style.getPropertyPriority(a)),!0):!1})}function na(a,b){return t(function*(){(yield S("background",a,b))||(yield S("background-image",a,b));(yield S("mask",a,b))||(yield S("-webkit-mask",a,b))||(yield S("mask-image",a,b))||(yield S("-webkit-mask-image",a,b))})}
+function oa(a,b){return t(function*(){const d=E(a,HTMLImageElement);if(d&&!H(a.src)||E(a,SVGImageElement)&&!H(a.href.baseVal)){var c=d?a.src:a.href.baseVal,e=yield L(c,M[N(c).toLowerCase()]||"",b);yield new Promise((f,g)=>{a.onload=f;a.onerror=b.m?(...k)=>{try{f(b.m(...k))}catch(m){g(m)}}:g;a.decode&&(a.decode=f);a.loading==="lazy"&&(a.loading="eager");d?(a.srcset="",a.src=e):a.href.baseVal=e})}})}
+function pa(a,b){return t(function*(){const d=w(a.childNodes).map(c=>T(c,b));yield Promise.all(d).then(()=>a)})}function T(a,b){return t(function*(){E(a,Element)&&(yield na(a,b),yield oa(a,b),yield pa(a,b))})};const U={};function V(a){return t(function*(){var b=U[a];if(b!=null)return b;b=yield(yield fetch(a)).text();b={url:a,cssText:b};return U[a]=b})}function W(a,b){return t(function*(){let d=a.cssText;const c=/url\(["']?([^"')]+)["']?\)/g,e=(d.match(/url\([^)]+\)/g)||[]).map(f=>t(function*(){let g=f.replace(c,"$1");g.startsWith("https://")||(g=(new URL(g,a.url)).href);return I(g,b.i,({result:k})=>{d=d.replace(f,`url(${k})`);return[f,k]})}));return Promise.all(e).then(()=>d)})}
+function X(a){if(a==null)return[];const b=[];a=a.replace(/(\/\*[\s\S]*?\*\/)/gi,"");for(var d=RegExp("((@.*?keyframes [\\s\\S]*?){([\\s\\S]*?}\\s*?)})","gi");;){var c=d.exec(a);if(c===null)break;b.push(c[0])}a=a.replace(d,"");d=/@import[\s\S]*?url\([^)]*\)[\s\S]*?;/gi;for(c=RegExp("((\\s*?(?:\\/\\*[\\s\\S]*?\\*\\/)?\\s*?@media[\\s\\S]*?){([\\s\\S]*?)}\\s*?})|(([\\s\\S]*?){([\\s\\S]*?)})","gi");;){let e=d.exec(a);if(e===null)if(e=c.exec(a),e===null)break;else d.lastIndex=c.lastIndex;else c.lastIndex=
+d.lastIndex;b.push(e[0])}return b}
+function qa(a,b){return t(function*(){const d=[],c=[];a.forEach(e=>{if("cssRules"in e)try{w(e.cssRules||[]).forEach((f,g)=>{if(f.type===CSSRule.IMPORT_RULE){let k=g+1;f=V(f.href).then(m=>W(m,b)).then(m=>X(m).forEach(q=>{try{e.insertRule(q,q.startsWith("@import")?k+=1:e.cssRules.length)}catch(Da){}})).catch(()=>{});c.push(f)}})}catch(f){const g=a.find(k=>k.href==null)||document.styleSheets[0];e.href!=null&&c.push(V(e.href).then(k=>W(k,b)).then(k=>X(k).forEach(m=>{g.insertRule(m,g.cssRules.length)})).catch(()=>
+{}))}});return Promise.all(c).then(()=>{a.forEach(e=>{if("cssRules"in e)try{w(e.cssRules||[]).forEach(f=>{d.push(f)})}catch(f){}});return d})})}function ra(a){return a.filter(b=>b.type===CSSRule.FONT_FACE_RULE).filter(b=>b.style.getPropertyValue("src").search(Q)!==-1)}function sa(a,b){return t(function*(){if(a.ownerDocument==null)throw Error("Provided element is not within a Document");var d=w(a.ownerDocument.styleSheets);d=yield qa(d,b);return ra(d)})}
+function ta(a){function b(c){(c.style.fontFamily||getComputedStyle(c).fontFamily).split(",").forEach(e=>{d.add(e.trim().replace(/["']/g,""))});Array.from(c.children).forEach(e=>{e instanceof HTMLElement&&b(e)})}const d=new Set;b(a);return d}function ua(a,b){return t(function*(){const d=yield sa(a,b),c=ta(a);return(yield Promise.all(d.filter(e=>c.has(e.style.fontFamily.trim().replace(/["']/g,""))).map(e=>R(e.cssText,e.parentStyleSheet?e.parentStyleSheet.href:null,b)))).join("\n")})}
+function va(a,b){return t(function*(){const d=b.j!=null?b.j:b.K?null:yield ua(a,b);if(d){const c=document.createElement("style");c.appendChild(document.createTextNode(d));a.firstChild?a.insertBefore(c,a.firstChild):a.appendChild(c)}})};function wa(a,b={}){return t(function*(){const {width:d,height:c}=A(a,b),e=yield P(a,b,!0);yield va(e,b);yield T(e,b);u(e,b);return yield D(e,d,c)})}
+function xa(a,b={}){return t(function*(){const {width:d,height:c}=A(a,b);var e=yield wa(a,b);e=yield B(e);const f=document.createElement("canvas"),g=f.getContext("2d"),k=b.G||window.devicePixelRatio||1,m=b.h||d,q=b.g||c;f.width=m*k;f.height=q*k;!b.J&&(f.width>16384||f.height>16384)&&(f.width>16384&&f.height>16384?f.width>f.height?(f.height*=16384/f.width,f.width=16384):(f.width*=16384/f.height,f.height=16384):f.width>16384?(f.height*=16384/f.width,f.width=16384):(f.width*=16384/f.height,f.height=
+16384));f.style.width=`${m}`;f.style.height=`${q}`;b.backgroundColor&&(g.fillStyle=b.backgroundColor,g.fillRect(0,0,f.width,f.height));g.drawImage(e,0,0,f.width,f.height);return f})}function ya(a,b={}){return t(function*(){return(yield xa(a,b)).toDataURL()})};const za=["gemini.google.com","corp.google.com","proxy.googlers.com"];function Y(){return document.body.querySelectorAll('[class*="animate"]').length>0}function Z(a){return t(function*(){try{return yield ya(a,{h:a.offsetWidth,g:a.offsetHeight})}catch(d){var b=a.offsetHeight;const c=document.createElement("canvas");c.width=a.offsetWidth;c.height=b;return c.toDataURL("image/png")}})}
+function Aa(){return t(function*(){const a=document.body.offsetWidth,b=document.body.offsetHeight,d=document.body.cloneNode(!0);d.querySelectorAll('[class*="animate"]').forEach(c=>{c.classList.remove(...Array.from(c.classList).filter(e=>e.startsWith("animate")))});d.style.width=`${a}px`;d.style.height=`${b}px`;return d})}
+function Ba(a){return t(function*(){let b=document.body;if(Y()){var d=yield Aa();b=d;document.body.appendChild(d)}d=yield Z(b);Y()&&document.body.removeChild(b);window.parent.postMessage({type:"SEND_SCREENSHOT",image:d,topOffset:document.documentElement.scrollTop},a.origin)})}function Ca(a){return t(function*(){const b={type:"SEND_SCREENSHOT_FOR_DATA_VISUALIZATION",image:yield Z(document.body),topOffset:0};window.parent.postMessage(b,a.origin)})}
+window.addEventListener("message",a=>t(function*(){if(za.some(d=>a.origin.includes(d))){var b=a.data;b&&(b.type==="MAKE_SCREENSHOT"&&(yield Ba(a)),b.type==="MAKE_SCREENSHOT_FOR_DATA_VISUALIZATION"&&(yield Ca(a)))}}));
+})();</script><script>(function() {
+  // Ensure this script is executed only once
+  if (window.firebaseAuthBridgeScriptLoaded) {
+    return;
+  }
+  window.firebaseAuthBridgeScriptLoaded = true;
+
+  let nextTokenPromiseId = 0;
+
+  // Stores { resolve, reject } for ongoing token requests
+  const pendingTokenPromises = {};
+
+  // Listen for messages from the Host Application
+  window.addEventListener('message', function(event) {
+
+    const messageData = event.data;
+
+  if (messageData && messageData.type === 'RESOLVE_NEW_FIREBASE_TOKEN') {
+      const { success, token, error, promiseId } = messageData ?? {};
+      if (pendingTokenPromises[promiseId]) {
+        if (success) {
+          pendingTokenPromises[promiseId].resolve(token);
+        } else {
+          pendingTokenPromises[promiseId].reject(new Error(error || 'Token refresh failed from host.'));
+        }
+        delete pendingTokenPromises[promiseId];
+      }
+    }
+  });
+
+  // Expose a function for the Generated App to request a new Firebase token
+  window.requestNewFirebaseToken = function() {
+    const currentPromiseId = nextTokenPromiseId++;
+    const promise = new Promise((resolve, reject) => {
+      pendingTokenPromises[currentPromiseId] = { resolve, reject };
+    });
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({
+        type: 'REQUEST_NEW_FIREBASE_TOKEN',
+        promiseId: currentPromiseId
+      }, '*');
+    } else {
+      pendingTokenPromises[currentPromiseId].reject(new Error('No parent window to request token from.'));
+      delete pendingTokenPromises[currentPromiseId];
+    }
+    return promise;
+  };
+})();</script><script>
+let realOriginalGetUserMedia = null;
+if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+  realOriginalGetUserMedia = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
+}
+
+(function() {
+  if (navigator.mediaDevices && navigator.mediaDevices.__proto__) {
+    try {
+      Object.defineProperty(navigator.mediaDevices.__proto__, 'getUserMedia', {
+        get: function() {
+          return undefined; // Or throw an error
+        },
+        configurable: false
+      });
+    } catch (error) {
+      console.error("Error defining prototype getter:", error);
+    }
+  }
+})();
+
+(function() {
+  const pendingMediaResolvers = {};
+  let nextMediaPromiseId = 0;
+
+  function requestMediaPermissions(constraints) {
+    const mediaPromiseId = nextMediaPromiseId++;
+    const promise = new Promise((resolve, reject) => {
+      pendingMediaResolvers[mediaPromiseId] = (granted) => {
+        delete pendingMediaResolvers[mediaPromiseId];
+        resolve(granted);
+      };
+    });
+
+    window.parent.postMessage({
+      type: 'requestMediaPermission',
+      constraints: constraints,
+      promiseId: mediaPromiseId,
+    }, '*');
+
+    return promise;
+  }
+
+  let originalGetUserMedia = realOriginalGetUserMedia;
+
+  function interceptGetUserMedia() {
+    if (navigator.mediaDevices) {
+      Object.defineProperty(navigator.mediaDevices, 'getUserMedia', {
+        value: function(constraints) {
+          return requestMediaPermissions(constraints).then((granted) => {
+            if (granted) {
+              if (originalGetUserMedia) {
+                return originalGetUserMedia(constraints);
+              } else {
+                throw new Error("Original getUserMedia not available.");
+              }
+            } else {
+              throw new DOMException('Permission denied', 'NotAllowedError');
+            }
+          });
+        },
+        writable: false,
+        configurable: false
+      });
+    }
+  }
+
+  interceptGetUserMedia();
+
+  const observer = new MutationObserver(function(mutationsList, observer) {
+    for (const mutation of mutationsList) {
+      if (mutation.type === 'reconfigured' && mutation.name === 'getUserMedia' && mutation.object === navigator.mediaDevices) {
+        interceptGetUserMedia();
+      } else if (mutation.type === 'attributes' && mutation.attributeName === 'getUserMedia' && mutation.target === navigator.mediaDevices) {
+        interceptGetUserMedia();
+      } else if (mutation.type === 'childList' && mutation.addedNodes) {
+        mutation.addedNodes.forEach(node => {
+          if (node === navigator.mediaDevices) {
+            interceptGetUserMedia();
+          }
+        });
+      }
+    }
+  });
+
+  function interceptSpeechRecognition() {
+    if (!window.SpeechRecognition && !window.webkitSpeechRecognition) {
+      return;
+    }
+
+    const OriginalSpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    const SpeechRecognitionWrapper = function(...args) {
+      const recognizer = new OriginalSpeechRecognition(...args);
+      const originalStart = recognizer.start.bind(recognizer);
+
+      recognizer.start = function() {
+        requestMediaPermissions({ audio: true }).then(granted => {
+          if (granted) {
+            originalStart();
+          } else {
+            const errorEvent = new SpeechRecognitionErrorEvent('error');
+            errorEvent.error = 'not-allowed'; // This is the standard error for permission denial.
+            recognizer.dispatchEvent(errorEvent);
+          }
+        });
+      };
+
+      return recognizer;
+    };
+
+    SpeechRecognitionWrapper.prototype = OriginalSpeechRecognition.prototype;
+    SpeechRecognitionWrapper.prototype.constructor = SpeechRecognitionWrapper;
+
+    if (window.SpeechRecognition) {
+      window.SpeechRecognition = SpeechRecognitionWrapper;
+    }
+    if (window.webkitSpeechRecognition) {
+      window.webkitSpeechRecognition = SpeechRecognitionWrapper;
+    }
+  }
+
+  interceptSpeechRecognition();
+
+  window.addEventListener('message', function(event) {
+    if (event.data) {
+      if (event.data.type === 'resolveMediaPermission') {
+        const { promiseId, granted } = event.data;
+        if (pendingMediaResolvers[promiseId]) {
+          pendingMediaResolvers[promiseId](granted);
+        }
+      }
+    }
+  });
+
+})();</script><script>((function(modelInformation) {
+  const originalFetch = window.fetch;
+  // TODO: b/421908508 - Move these out of the script and match all generative AI model calls.
+  let googleLlmBaseApiUrls = [
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.textModelName + ':streamGenerateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.textModelName + ':generateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageModelName + ':predict',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageModelName + ':predictLongRunning',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageEditModelName + ':generateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageTransformModelName + ':generateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.videoModelName + ':predict',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.videoModelName + ':predictLongRunning',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.ttsModelName + ':generateContent',
+  ];
+  modelInformation.deprecatedTextModelNames.forEach((modelName) => {
+    googleLlmBaseApiUrls.push(
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':streamGenerateContent',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':generateContent',
+    );
+  });
+  modelInformation.deprecatedImageModelNames.forEach((modelName) => {
+    googleLlmBaseApiUrls.push(
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':predict',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':predictLongRunning',
+    );
+  });
+
+  const pendingFetchResolvers = {};
+  let nextPromiseId = 0;
+
+  function handleStringInput(input, optionsArgument) {
+    const actualUrl = input;
+    const fetchCallArgs = [actualUrl, optionsArgument];
+    const effectiveOptions = optionsArgument || {};
+    const bodyForApiKeyCheck = effectiveOptions.body;
+    const bodyForPostMessage = effectiveOptions.body;
+    return { actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage };
+  }
+
+  function handleRequestInput(input, optionsArgument) {
+    const actualUrl = input.url;
+    const fetchCallArgs = [input, optionsArgument];
+    const effectiveOptions = { method: input.method, headers: new Headers(input.headers) };
+    let bodyForApiKeyCheck;
+    let bodyForPostMessage;
+
+    if (optionsArgument) {
+      if (optionsArgument.method) effectiveOptions.method = optionsArgument.method;
+      if (optionsArgument.headers) effectiveOptions.headers = new Headers(optionsArgument.headers);
+      if ('body' in optionsArgument) {
+        bodyForApiKeyCheck = optionsArgument.body;
+        bodyForPostMessage = optionsArgument.body;
+      } else {
+        bodyForApiKeyCheck = undefined;
+        bodyForPostMessage = input.body;
+      }
+    } else {
+      bodyForApiKeyCheck = undefined;
+      bodyForPostMessage = input.body;
+    }
+    return { actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage };
+  }
+
+  window.fetch = function(input, optionsArgument) {
+    let actualUrl;
+    let fetchCallArgs;
+    let effectiveOptions = {};
+    let bodyForApiKeyCheck;
+    let bodyForPostMessage;
+
+    if (typeof input === 'string') {
+      ({actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage} = handleStringInput(input, optionsArgument));
+    } else if (input instanceof Request) {
+      ({actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage} = handleRequestInput(input, optionsArgument));
+    } else {
+      return originalFetch.apply(window, [input, optionsArgument]);
+    }
+
+    effectiveOptions.method = effectiveOptions.method || 'GET';
+    if (!effectiveOptions.headers) {
+      effectiveOptions.headers = new Headers();
+    }
+
+
+    if (typeof actualUrl === 'string' && googleLlmBaseApiUrls.some((url) => actualUrl.startsWith(url))) {
+      let apiKeyIsNull = true;
+
+      const regex = new RegExp("models/([^:]+)");
+      const modelNameMatch = actualUrl.match(regex);
+      const modelName = modelNameMatch ? modelNameMatch[1] : 'unspecified';
+
+
+      try {
+        const urlObject = new URL(actualUrl);  // Use URL object for robust parsing
+        const apiKeyParam = urlObject.searchParams.get('key');
+        if (apiKeyParam) {
+          apiKeyIsNull = false;
+        }
+      } catch (e) {
+        // Continue checks even if URL parsing fails
+      }
+
+      if (apiKeyIsNull && effectiveOptions.headers) {
+        const h = new Headers(effectiveOptions.headers);
+        const apiKeyHeaderValue = h.get('X-API-Key') || h.get('x-api-key');
+        if (apiKeyHeaderValue) {
+          apiKeyIsNull = false;
+          return originalFetch.apply(window, fetchCallArgs);
+        }
+      }
+
+      if (apiKeyIsNull && effectiveOptions.method && ['POST', 'PUT', 'PATCH'].includes(effectiveOptions.method.toUpperCase()) && typeof bodyForApiKeyCheck === 'string') {
+        try {
+          const bodyData = JSON.parse(bodyForApiKeyCheck);
+          if (bodyData && bodyData.apiKey) {
+            apiKeyIsNull = false;
+            return originalFetch.apply(window, fetchCallArgs);
+          }
+        } catch (e) {
+          // Ignore JSON parsing errors
+        }
+      }
+
+      if(apiKeyIsNull) {
+        const promiseId = nextPromiseId++;
+        const promise = new Promise((resolve) => {
+          pendingFetchResolvers[promiseId] = (resolvedResponse) => {
+            delete pendingFetchResolvers[promiseId];
+            resolve(resolvedResponse);
+          };
+        });
+
+        let serializedBodyForPostMessage;
+        if (typeof bodyForPostMessage === 'string' || bodyForPostMessage == null) {
+            serializedBodyForPostMessage = bodyForPostMessage;
+        } else if (bodyForPostMessage instanceof ReadableStream) {
+            serializedBodyForPostMessage = null;
+        } else {
+            try {
+                serializedBodyForPostMessage = JSON.stringify(bodyForPostMessage);
+            } catch (e) {
+                serializedBodyForPostMessage = null;
+            }
+        }
+
+        const messageOptions = {
+            method: effectiveOptions.method,
+            headers: Object.fromEntries(new Headers(effectiveOptions.headers).entries()),
+            body: serializedBodyForPostMessage
+        };
+
+        window.parent.postMessage({
+          type: 'requestFetch',
+          url: actualUrl,
+          modelName: modelName,
+          options: messageOptions,
+          promiseId: promiseId,
+        }, '*');
+
+        return promise;
+      }
+      return originalFetch.apply(window, fetchCallArgs);
+    }
+    return originalFetch.apply(window, fetchCallArgs);
+  };
+
+  window.addEventListener('message', function(event) {
+    if (event.data && event.data.type === 'resolveFetch') {
+      const { promiseId, response } = event.data;
+      if (pendingFetchResolvers[promiseId]) {
+        try {
+          const reconstructedResponse = new Response(response.body, {
+            status: response.status,
+            statusText: response.statusText,
+            headers: new Headers(response.headers),
+          });
+          pendingFetchResolvers[promiseId](reconstructedResponse);
+        } catch (error) {
+          pendingFetchResolvers[promiseId](new Response(null, { status: 500, statusText: "Interceptor Response Reconstruction Error" }));
+        }
+      }
+    }
+  });
+
+}))({"textModelName":"gemini-3-flash-preview","imageModelName":"imagen-4.0-generate-001","imageEditModelName":"gemini-2.5-flash-image-preview","imageTransformModelName":"gemini-3-pro-image-preview-11-2025","videoModelName":"veo-2.0-generate-001","ttsModelName":"gemini-2.5-flash-preview-tts","deprecatedTextModelNames":["gemini-2.0-flash","gemini-2.5-flash","gemini-2.5-flash-preview-04-17","gemini-2.5-flash-preview-05-20","gemini-2.5-flash-preview-09-2025"],"deprecatedImageModelNames":["imagen-3.0-generate-001","imagen-3.0-generate-002"]})</script><script>(function(){'use strict';function a(){window.parent.postMessage({type:"interaction"},"*")}window.addEventListener("click",a,{capture:!0,passive:!0});window.addEventListener("touchstart",a,{capture:!0,passive:!0});window.addEventListener("keydown",a,{capture:!0,passive:!0});}).call(this);
+</script><script>(function() {
+  const originalConsoleLog = console.log;
+  const originalConsoleError = console.error;
+
+    /**
+   * Normalizes an error event or a promise rejection reason into a structured error object.
+   * @param {*} errorEventOrReason The error object or reason.
+   * @return {object} Structured error data { message, name, stack }.
+   */
+  function getErrorObject(errorEventOrReason) {
+    if (errorEventOrReason instanceof Error) {
+      return {
+        message: errorEventOrReason.message,
+        name: errorEventOrReason.name,
+        stack: errorEventOrReason.stack,
+      };
+    }
+    // Fallback for non-Error objects.
+    try {
+      return {
+        message: JSON.stringify(errorEventOrReason),
+        name: 'UnknownErrorType',
+        stack: null,
+      };
+    } catch (e) {
+      return {
+        message: String(errorEventOrReason),
+        name: 'UnknownErrorTypeNonStringifiable',
+        stack: null,
+      };
+    }
+  }
+
+  /**
+   * Converts an array of arguments (from log/error) into a single string.
+   * Handles Error objects specially to include their message and stack.
+   * @param {Array<*>} args - Arguments passed to console methods.
+   * @return {string} A string representation of the arguments.
+   */
+  function stringifyArgs(args) {
+    return args
+      .map((arg) => {
+        if (arg instanceof Error) {
+          const {message, stack} = arg;
+          return `Error: ${message}${stack ? ('\nStack: ' + stack) : ''}`;
+        }
+        if (typeof arg === 'object' && arg !== null) {
+          try {
+            return JSON.stringify(arg);
+          } catch (error) {
+            return '[Circular Object]';
+          }
+        } else {
+          return String(arg);
+        }
+      })
+      .join(' ');
+  }
+
+  console.log = function(...args) {
+    const logString = stringifyArgs(args);
+    window.parent.postMessage({ type: 'log', message: logString }, '*');
+    originalConsoleLog.apply(console, args);
+  };
+
+  console.error = function(...args) {
+    let errorData;
+    if (args.length > 0 && args[0] instanceof Error) {
+      const err = args[0];
+      // If the first arg is an Error, capture its details.
+      errorData = {
+        type: 'error',
+        source: 'CONSOLE_ERROR',
+        ...getErrorObject(err),
+        rawArgsString: stringifyArgs(args.slice(1)),
+        timestamp: new Date().toISOString(),
+      };
+    } else {
+      // If not an Error object, treat all args as a general error message.
+      errorData = {
+        type: 'error',
+        source: 'CONSOLE_ERROR',
+        message: stringifyArgs(args),
+        name: 'ConsoleLoggedError',
+        stack: null,
+        timestamp: new Date().toISOString(),
+      };
+    }
+    window.parent.postMessage(errorData, '*');
+    originalConsoleError.apply(console, args);
+  };
+
+  // Listen for global unhandled synchronous errors.
+  window.addEventListener('error', function(event) {
+    const errorDetails = event.error ? getErrorObject(event.error) : {
+      message: event.message,
+      name: 'GlobalError',
+      stack: null,
+      filename: event.filename,
+      lineno: event.lineno,
+      colno: event.colno,
+    };
+
+    window.parent.postMessage({
+      type: 'error',
+      source: 'global',
+      ...errorDetails,
+      message: errorDetails.message || event.message,
+      timestamp: new Date().toISOString(),
+    }, '*');
+  });
+
+  // Listen for unhandled promise rejections (asynchronous errors).
+  window.addEventListener('unhandledrejection', function(event) {
+    const errorDetails = getErrorObject(event.reason);
+
+    window.parent.postMessage({
+      type: 'error',
+      source: 'unhandledrejection',
+      ...errorDetails,
+      message: errorDetails.message || 'Unhandled Promise Rejection',
+      timestamp: new Date().toISOString(),
+    }, '*');
+  });
+
+})();</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLOW / NEXUS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+<link href="https://cdn.jsdelivr.net/npm/gridstack@10.1.1/dist/gridstack.min.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/gridstack@10.1.1/dist/gridstack-all.js"></script>
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    
+</head>
+<body onclick="app.handleGlobalClick(event)">
+
+    <!-- Header -->
+    <header id="mainHeader" class="fixed top-0 left-0 right-0 h-32 px-12 flex items-center justify-between z-[100] pointer-events-none relative" style="background-color: transparent;">
+        <div class="pointer-events-auto flex items-start gap-6 shrink-0 max-w-[45%]">
+            <span id="activeTabTitle" class="huge-text text-5xl md:text-6xl uppercase tracking-wider shrink-0 mt-1">设置</span>
+            <div id="headerStarredTask" class="hidden flex flex-col justify-center shrink-0 overflow-hidden">
+                <div class="flex items-center gap-1 mb-1">
+                    <span id="headerStarIcon" class="text-base star-icon-shadow">★</span>
+                    <span class="text-base font-black uppercase tracking-widest truncate max-w-[250px] text-white" id="headerStarTitleText">--</span>
+                </div>
+                <span id="headerStarDdl" class="huge-text text-3xl md:text-4xl star-ddl-custom whitespace-nowrap tracking-wider">00:00:00</span>
+            </div>
+        </div>
+
+        <div id="headerTimer" class="hidden absolute left-1/2 top-1/2 cursor-pointer pointer-events-auto flex items-center gap-4 transition-all hover:opacity-80" onclick="timer.toggle()">
+            <div id="headerTimerDot" class="w-3 h-3 rounded-full bg-white shadow-[0_0_15px_rgba(255,255,255,0.8)]"></div>
+            <span id="headerTimerVal" class="huge-text text-5xl md:text-6xl text-white">25:00</span>
+        </div>
+
+        <div class="flex items-center pointer-events-auto ml-auto shrink-0">
+            <div class="flex gap-8 items-center pt-2 shrink-0" id="navLinks">
+                <span class="nav-btn text-sm uppercase font-bold tracking-widest cursor-pointer opacity-40 hover:opacity-100 transition-all" data-view="home" onclick="app.showView('home')">主页</span>
+                <span class="nav-btn text-sm uppercase font-bold tracking-widest cursor-pointer opacity-40 hover:opacity-100 transition-all" data-view="library" onclick="app.showView('library')">库</span>
+                <span class="nav-btn text-sm uppercase font-bold tracking-widest cursor-pointer opacity-40 hover:opacity-100 transition-all" data-view="pomodoro" onclick="app.showView('pomodoro')">番茄钟</span>
+                <span class="nav-btn text-sm uppercase font-bold tracking-widest cursor-pointer opacity-40 hover:opacity-100 transition-all" data-view="music" onclick="app.showView('music')">音乐</span>
+                <span class="nav-btn text-sm uppercase font-bold tracking-widest cursor-pointer opacity-40 hover:opacity-100 transition-all active" data-view="settings" onclick="app.showView('settings')">设置</span>
+            </div>
+            <div id="sysClock" class="flex flex-col opacity-90 border-l border-white/20 pl-8 ml-8 shrink-0 w-44">
+                <div class="flex justify-between items-center w-full text-white/60 text-xs font-bold tracking-widest mb-1">
+                    <span id="sysDate">03/11</span>
+                    <span id="sysDay">周三</span>
+                </div>
+                <span id="sysTime" class="text-3xl tracking-widest text-white tabular-nums w-full text-right font-black">00:43:40</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- HOME 视图 -->
+    <section id="homePage" class="view-page !p-0 flex flex-col hidden h-screen w-screen overflow-hidden">
+        
+        <div class="w-full flex justify-between items-center px-8 pt-24 pb-4 shrink-0 bg-gradient-to-b from-black/80 to-transparent z-50">
+            <div class="flex gap-4">
+                <div class="relative group">
+                    <button class="text-xs font-bold border border-white/20 px-4 py-2 rounded-full hover:bg-white hover:text-black transition-all flex items-center gap-2">
+                        <span>＋ 添加模块</span>
+                    </button>
+                    <div class="absolute left-0 top-full mt-2 w-48 bg-zinc-900 border border-white/10 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all flex flex-col p-2 overflow-hidden z-50">
+                        <button onclick="app.addHomeModule('greeting')" class="text-left text-xs font-bold px-4 py-3 hover:bg-white/10 rounded-lg transition-colors">👋 问候语</button>
+                        <button onclick="app.addHomeModule('ai_flow')" class="text-left text-xs font-bold px-4 py-3 hover:bg-white/10 rounded-lg transition-colors">🧠 AI 每日流</button>
+                        <button onclick="app.addHomeModule('bridge')" class="text-left text-xs font-bold px-4 py-3 hover:bg-white/10 rounded-lg transition-colors">⚡ 断点恢复 (Bridge)</button>
+                        <button onclick="app.addHomeModule('notes')" class="text-left text-xs font-bold px-4 py-3 hover:bg-white/10 rounded-lg transition-colors">📝 随手记 (Notes)</button>
+                        <button onclick="app.addHomeModule('tunes')" class="text-left text-xs font-bold px-4 py-3 hover:bg-white/10 rounded-lg transition-colors">🎵 音乐控制 (Tunes)</button>
+                        <button onclick="app.addHomeModule('lyrics')" class="text-left text-xs font-bold px-4 py-3 hover:bg-white/10 rounded-lg transition-colors">🎤 迷你歌词 (Lyrics)</button>
+                        <button onclick="app.addHomeModule('spacer_' + Date.now())" class="text-left text-xs font-bold px-4 py-3 hover:bg-white/10 rounded-lg transition-colors text-white/50">🔲 空白占位块 (Spacer)</button>
+                    </div>
+                </div>
+                <button id="toggleDeleteModeBtn" onclick="app.toggleHomeDeleteMode()" class="text-xs font-bold border border-white/20 px-4 py-2 rounded-full transition-all hover:bg-red-500/20 hover:border-red-500 hover:text-red-400">
+                    － 删除模式
+                </button>
+            </div>
+            
+            <div class="text-[10px] font-bold opacity-30 uppercase tracking-widest">Nexus Flow Layout Engine</div>
+        </div>
+
+        <div class="flex-1 w-full overflow-y-auto overflow-x-hidden px-4 md:px-8 pb-32 pt-4">
+            <div class="grid-stack" id="homeGridStack">
+                </div>
+        </div>
+    </section>
+
+    <!-- LIBRARY 视图 -->
+    <section id="libraryPage" class="view-page hidden flex gap-2">
+        <div id="libLeftPanel" class="flex flex-col h-full pr-4 shrink-0 border-r border-transparent" style="width: var(--lib-left-w, 45%); min-width: 250px;">
+            <div class="flex justify-between items-end mb-8">
+                <div>
+                    <span class="text-[10px] font-bold opacity-30 uppercase tracking-[0.2em] block mb-3">项目索引</span>
+                    <div class="flex gap-4 text-xs font-bold uppercase opacity-60">
+                        <span class="cursor-pointer transition-all lib-filter active" data-filter="active" onclick="library.setFilter('active')">活跃</span>
+                        <span class="cursor-pointer transition-all lib-filter" data-filter="archived" onclick="library.setFilter('archived')">归档</span>
+                        <span class="cursor-pointer transition-all lib-filter text-red-400" data-filter="deleted" onclick="library.setFilter('deleted')">垃圾桶</span>
+                    </div>
+                </div>
+                <div class="flex flex-col items-end gap-2 relative">
+                    <button id="btnEmptyTrash" onclick="library.emptyTrash()" class="hidden text-[10px] font-bold text-red-400 border-b border-red-400/50 hover:border-red-400 pb-0.5 transition-all">清空垃圾桶</button>
+                    <div class="flex items-center gap-3">
+                        <button onclick="library.toggleSortOrder()" class="opacity-60 hover:opacity-100 transition-all font-black text-sm p-1" title="切换升降序"><span id="sortOrderIcon">↑</span></button>
+                        <div class="relative">
+                            <button onclick="library.toggleSortMenu(event)" class="opacity-60 hover:opacity-100 transition-opacity p-1" title="排序依据">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M7 12h10M10 18h4"></path></svg>
+                            </button>
+                            <div id="sortDropdown" class="absolute right-0 top-full mt-2 bg-zinc-900 border border-white/10 p-2 rounded hidden w-40 z-50 shadow-xl">
+                                <div class="text-[10px] font-bold opacity-50 mb-2 pl-2">排序依据</div>
+                                <div class="text-xs font-bold hover:bg-white/10 p-2 rounded cursor-pointer" onclick="library.setSortMethod('custom')">自定义 (拖拽)</div>
+                                <div class="text-xs font-bold hover:bg-white/10 p-2 rounded cursor-pointer" onclick="library.setSortMethod('ddl')">剩余时间</div>
+                                <div class="text-xs font-bold hover:bg-white/10 p-2 rounded cursor-pointer" onclick="library.setSortMethod('weight')">优先级</div>
+                                <div class="text-xs font-bold hover:bg-white/10 p-2 rounded cursor-pointer" onclick="library.setSortMethod('created')">创建时间</div>
+                            </div>
+                        </div>
+                        <button onclick="library.addProject()" class="text-sm font-black uppercase hover:opacity-70 text-blue-400 ml-2">+ 新建项目</button>
+                    </div>
+                </div>
+            </div>
+            <div id="projectList" class="flex-1 overflow-y-auto custom-scroll space-y-3 pb-24 pr-2"><div class="opacity-30 text-sm font-bold mt-8 text-center border border-white/10 py-6 rounded">当前列表为空</div></div>
+        </div>
+
+        <div id="libResizer" class="w-2 hover:bg-white/20 transition-colors cursor-col-resize shrink-0 z-50 rounded" onmousedown="app.startResize(event)"></div>
+
+        <div id="libRightPanel" class="flex-1 min-w-0 h-full overflow-y-auto no-scrollbar pb-24 relative pl-4">
+            <div id="libPlaceholder" class="absolute inset-0 flex items-center justify-center opacity-10 text-lg font-bold uppercase tracking-[0.3em]">选择一个项目进行预览</div>
+            
+            <div id="libActive" class="hidden flex flex-col gap-6">
+                <div class="flex flex-wrap justify-between items-center gap-4">
+                    <div contenteditable="true" id="editTitle" class="huge-text text-5xl md:text-6xl uppercase bg-transparent outline-none flex-1 min-w-[200px] break-words editable-line leading-tight py-2" onblur="library.saveTitle()" onkeydown="if(event.key==='Enter'){event.preventDefault(); this.blur();}"></div>
+                    <div class="flex items-center gap-4 flex-shrink-0 ml-auto mt-2 md:mt-0">
+                        <div id="detailDdlDisplay" class="font-bold text-red-500 bg-red-500/10 px-3 py-1 rounded tracking-widest hidden text-right"></div>
+                        <div class="flex gap-2 opacity-50 hover:opacity-100 transition-opacity">
+                        <button onclick="library.archiveProject()" class="p-2 border border-white/20 hover:bg-white hover:text-black transition-all rounded" title="归档"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>
+                        <button onclick="library.deleteProject()" class="p-2 border border-red-500/50 text-red-400 hover:bg-red-500 hover:text-white transition-all rounded" title="删除"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"></path></svg></button>
+                    </div>
+                </div>
+
+                <div id="detailBridgeArea" class="hidden bg-yellow-500/10 border border-yellow-500/30 p-4 rounded relative group cursor-pointer hover:bg-yellow-500/20 transition-all" onclick="app.jumpAndResumeBridge()">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="text-[10px] font-bold text-yellow-500 uppercase tracking-widest">BRIDGE_ 断点记录</span>
+                        <span class="text-[10px] font-bold text-yellow-500/50 uppercase group-hover:text-yellow-500 transition-colors">点击进入专注</span>
+                    </div>
+                    <p class="text-base font-bold text-white/90 mt-2" id="detailBridgeContent">--</p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-8 border-b border-white/10 pb-6 mt-2">
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-4">
+                            <span class="text-[10px] font-bold opacity-40 uppercase w-16 shrink-0">截止日期:</span>
+                            <div class="flex items-center text-sm font-bold bg-white/5 border border-white/20 rounded pl-2 select-none">
+                                <button onclick="library.clearDdl()" class="mr-2 opacity-30 hover:opacity-100 hover:text-red-400 transition-all text-lg leading-none" title="一键清除 DDL">✕</button>
+                                <span class="opacity-20 mr-2">|</span>
+                                <div class="flex py-1.5 items-center">
+                                    <span class="ddl-part" contenteditable="true" onblur="library.editDdlDirect('year', this.innerText)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur();}" onwheel="library.scrollDdl(event, 'year')" id="ddlYear">YYYY</span><span class="opacity-50">/</span>
+                                    <span class="ddl-part" contenteditable="true" onblur="library.editDdlDirect('month', this.innerText)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur();}" onwheel="library.scrollDdl(event, 'month')" id="ddlMonth">MM</span><span class="opacity-50">/</span>
+                                    <span class="ddl-part" contenteditable="true" onblur="library.editDdlDirect('date', this.innerText)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur();}" onwheel="library.scrollDdl(event, 'date')" id="ddlDate">DD</span>
+                                </div>
+                                <span class="mx-2 opacity-20">|</span>
+                                <div class="flex py-1.5 items-center pr-2">
+                                    <span class="ddl-part" contenteditable="true" onblur="library.editDdlDirect('hour', this.innerText)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur();}" onwheel="library.scrollDdl(event, 'hour')" id="ddlHour">--</span><span class="opacity-50">:</span>
+                                    <span class="ddl-part" contenteditable="true" onblur="library.editDdlDirect('minute', this.innerText)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur();}" onwheel="library.scrollDdl(event, 'minute')" id="ddlMinute">--</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="text-[10px] font-bold opacity-80 uppercase w-16 text-red-400 shrink-0">外力 DDL:</span>
+                            <div class="flex items-center flex-1 border-b border-white/20 focus-within:border-white transition-colors">
+                                <input type="text" id="editExtDdl" class="bg-transparent text-sm outline-none text-red-300 placeholder:text-red-900/50 flex-1 py-1 font-bold" placeholder="填入约束并 ✨ 评估" onblur="library.saveAttrs()" onkeydown="if(event.key==='Enter') this.blur()">
+                                <button onclick="ai.reviewTask()" class="text-xl opacity-60 hover:opacity-100 hover:scale-110 transition-all p-1 outline-none" title="AI 目标评估">
+                                    <span id="aiReviewIcon" class="leading-none block">✨</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-4">
+                            <span class="text-[10px] font-bold opacity-40 uppercase w-16 shrink-0">优先级:</span>
+                            <div class="flex gap-1" id="priorityStarsContainer"></div>
+                            <span id="priorityText" class="text-xs font-bold text-white/60 ml-2 w-10"></span>
+                        </div>
+                        <p class="text-xs text-red-300/80 font-bold hidden pl-20" id="aiReviewOutput"></p>
+                    </div>
+                </div>
+
+                <div class="space-y-2 border-b border-white/10 pb-6 mt-2 relative">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-[10px] font-bold text-yellow-500 uppercase tracking-widest">BRIDGE_ 海明威停顿点</span>
+                        <span class="text-[10px] font-bold border border-white/20 px-3 py-1 rounded hover:bg-white hover:text-black transition-all cursor-pointer" onclick="app.showHistoryPage()">历史归档</span>
+                    </div>
+                    <textarea id="inlineBridgeInput" class="w-full bg-yellow-500/5 border border-yellow-500/20 rounded-xl p-4 text-base text-white font-bold outline-none focus:border-yellow-500 focus:bg-yellow-500/10 transition-colors resize-none placeholder:text-yellow-500/30 custom-scroll" rows="3" placeholder="在此记录此时的上下文断点... (当你点击下方开始专注时，此日志将自动归档)" onblur="library.saveInlineBridge()"></textarea>
+                </div>
+
+                <div class="pt-2">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-[10px] font-bold opacity-30 uppercase">执行步骤</span>
+                        <button onclick="library.addStep()" class="text-[10px] font-bold border border-white/20 px-2 py-1 rounded hover:bg-white hover:text-black transition-all">+ 添加步骤</button>
+                    </div>
+                    <div id="libSteps" class="space-y-2"></div>
+                </div>
+
+                <div class="pt-6 flex items-center justify-start mt-4 pb-8">
+                    <button onclick="app.startFocusFromLibrary()" class="rounded-full bg-transparent border-2 border-white text-white px-12 py-3 font-black uppercase tracking-widest text-lg hover:bg-[#0ea5e9] hover:border-[#0ea5e9] transition-all shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:shadow-[0_0_25px_rgba(14,165,233,0.5)]">
+                        开始专注
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- POMODORO 视图 -->
+    <section id="pomodoroPage" class="view-page flex flex-col justify-between items-center pb-8 pt-0 hidden">
+        <div class="flex-1 w-full flex flex-col items-center justify-center relative">
+            <div class="flex flex-col items-end relative group">
+                <div class="flex items-center huge-text timer-fluid">
+                    <input type="text" id="pomoCenterMins" aria-label="专注分钟" class="time-input text-right" style="width: 2.5ch;" value="25" spellcheck="false" onchange="timer.updateFromInputs()" onwheel="timer.scrollTime(event, 'centerMins')" onclick="event.stopPropagation()">
+                    <span class="opacity-50 pb-2 cursor-default pointer-events-none">:</span>
+                    <input type="text" id="pomoCenterSecs" aria-label="专注秒数" class="time-input text-left" style="width: 2.5ch;" value="00" spellcheck="false" onchange="timer.updateFromInputs()" onwheel="timer.scrollTime(event, 'centerSecs')" onclick="event.stopPropagation()">
+                    
+                    <div onclick="timer.skip(event)" class="absolute -right-24 opacity-0 group-hover:opacity-30 hover:!opacity-100 cursor-pointer pointer-events-auto transition-opacity z-50">
+                        <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 15 5 5 5-5"></path><path d="m7 9 5-5 5 5"></path></svg>
+                    </div>
+                </div>
+                <div id="pomoHint" class="absolute -bottom-10 opacity-0 pointer-events-none transition-opacity font-bold text-xs uppercase tracking-widest w-full text-center">双击屏幕重置</div>
+            </div>
+        </div>
+
+        <div class="w-full max-w-7xl flex items-end justify-between pointer-events-none">
+            <div class="flex flex-col items-start space-y-1 pointer-events-auto" id="taskChain">
+                <div class="opacity-30 hover:opacity-100 transition-opacity cursor-pointer text-xs font-bold uppercase" onclick="app.showView('library')" id="chainNext">下一步: 休息</div>
+                <div class="opacity-60 hover:opacity-100 transition-opacity cursor-pointer text-base font-bold uppercase" onclick="app.showView('library')" id="chainCurrent">当前: 专注时间</div>
+                <div class="huge-text text-4xl md:text-5xl uppercase opacity-80 hover:opacity-100 transition-opacity cursor-pointer mt-1" onclick="app.showView('library')" id="chainBig">自由心流</div>
+                <button onclick="app.showView('music')" class="mt-4 text-[10px] font-bold border border-white/20 px-3 py-2 rounded hover:bg-white hover:text-black transition-all uppercase tracking-widest opacity-60 hover:opacity-100 w-fit">
+                    🎵 音乐控制台
+                </button>
+            </div>
+            
+            <div class="flex flex-col items-end pointer-events-auto">
+            <div class="flex items-center gap-6 mb-4">
+                <div class="flex items-center gap-1 opacity-40 group hover:opacity-100 transition-opacity">
+                    <span class="text-xl font-bold uppercase tracking-widest mr-2" id="pomoCornerLabel">休息:</span>
+                    <input type="text" id="pomoCornerMins" aria-label="休息分钟" class="huge-text text-4xl time-input text-right" style="width: 2.5ch;" value="05" spellcheck="false" onchange="timer.updateFromInputs()" onwheel="timer.scrollTime(event, 'cornerMins')" onclick="event.stopPropagation()">
+                    <span class="text-4xl huge-text pb-1 cursor-default pointer-events-none">:</span>
+                    <input type="text" id="pomoCornerSecs" aria-label="休息秒数" class="huge-text text-4xl time-input text-left" style="width: 2.5ch;" value="00" spellcheck="false" onchange="timer.updateFromInputs()" onwheel="timer.scrollTime(event, 'cornerSecs')" onclick="event.stopPropagation()">
+                </div>
+                <button onclick="timer.skip(event)" class="opacity-30 hover:opacity-100 transition-opacity text-xs font-bold uppercase tracking-widest border border-white/20 px-4 py-1.5 rounded-full hover:bg-white hover:text-black">
+                    跳过阶段
+                </button>
+            </div>                
+            <button id="pomoBridgeBtn" onclick="app.jumpToLibraryAndFocusBridge(event)" class="hidden px-8 py-3 bg-transparent border-2 border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-black rounded-full transition-all font-black uppercase text-sm tracking-widest">
+                    BRIDGE_
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- BRIDGE ARCHIVE 历史视图 -->
+    <section id="historyPage" class="view-page hidden flex flex-col items-center overflow-y-auto no-scrollbar pb-24">
+        <div class="w-full max-w-4xl relative pt-4">
+            <div class="flex items-center gap-6 mb-8 border-b border-white/10 pb-8">
+                <button onclick="app.showView('library')" class="text-white/50 hover:text-white hover:-translate-x-2 transition-all huge-text text-5xl shrink-0">←</button>
+                <div>
+                    <h2 class="huge-text text-5xl md:text-6xl uppercase tracking-widest" id="historyTaskTitle">项目名称</h2>
+                    <p class="text-sm font-bold text-white/40 mt-2">断点日志 · 历史归档</p>
+                </div>
+            </div>
+            <div class="mb-10">
+                <input type="text" id="historySearchInput" placeholder="输入关键词或日期进行检索..." class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 text-white font-bold outline-none focus:border-yellow-500 transition-colors" oninput="app.renderHistoryList()">
+            </div>
+            <div id="historyListContainer" class="space-y-6 pb-12"></div>
+        </div>
+    </section>
+
+    <!-- MUSIC 视图 -->
+    <section id="musicPage" class="view-page hidden flex items-center justify-center">
+        <div class="w-full max-w-7xl mx-auto pt-4 pb-20 px-8">
+            <div class="flex items-center gap-6 mb-8 border-b border-white/10 pb-8">
+                <button onclick="app.showView('pomodoro')" class="text-white/50 hover:text-white hover:-translate-x-2 transition-all huge-text text-5xl shrink-0">←</button>
+                <div class="flex-1 min-w-0">
+                    <h2 class="huge-text text-5xl md:text-6xl uppercase tracking-widest truncate">MUSIC_ CONSOLE</h2>
+                    <p class="text-sm font-bold text-white/40 mt-2">网易云 · 双源歌单 · 预加载低延迟</p>
+                    <div class="mt-4 flex items-center gap-2">
+                        <button id="musicSourceDaily" onclick="musicManager.loadDailySourceAndPlay()" class="text-[10px] font-bold border border-white/20 px-3 py-1 rounded transition-all">每日推荐</button>
+                        <button id="musicSourceLiked" onclick="musicManager.loadLikedPlaylistAndPlay()" class="text-[10px] font-bold border border-white/20 px-3 py-1 rounded transition-all">我的喜欢</button>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span id="musicStatus" class="text-[10px] font-bold opacity-40 uppercase tracking-widest">idle</span>
+                    <button onclick="musicManager.refresh()" class="text-[10px] font-bold border border-white/20 px-3 py-1 rounded hover:bg-white hover:text-black transition-all">刷新</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- 左：封面与曲目信息 -->
+                <div class="space-y-6">
+                    <div class="bg-white/5 rounded-2xl border border-white/10 p-6">
+                        <div class="flex items-start gap-6">
+                            <div class="w-32 h-32 rounded-2xl border border-white/10 bg-black/40 overflow-hidden shrink-0">
+                                <img id="musicCover" alt="Album Cover" class="w-full h-full object-cover opacity-90" src="" />
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div id="musicTitle" class="huge-text text-3xl uppercase tracking-wider text-white/90 truncate">--</div>
+                                <div id="musicArtist" class="text-sm font-bold text-white/50 mt-2 truncate">--</div>
+                                <div class="mt-5 flex items-center gap-3">
+                                    <span class="text-[10px] font-bold opacity-40 uppercase tracking-widest">play mode</span>
+                                    <button id="musicPlayModeBtn" onclick="musicManager.cyclePlayMode()" class="text-[10px] font-bold border border-white/20 px-3 py-1 rounded hover:bg-white hover:text-black transition-all">sequence</button>
+                                    <span id="musicQueueInfo" class="text-[10px] font-bold text-white/40 ml-auto">0/0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 控制区 -->
+                    <div class="bg-white/5 rounded-2xl border border-white/10 p-6 space-y-6">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between text-[10px] font-bold opacity-50 uppercase tracking-widest">
+                                <span id="musicTimeNow">00:00</span>
+                                <span id="musicTimeTotal">00:00</span>
+                            </div>
+                            <input id="musicProgress" type="range" min="0" max="1000" value="0" class="w-full cursor-pointer" oninput="musicManager.seekFromUi(this.value)">
+                        </div>
+
+                        <div class="flex items-center justify-center gap-4">
+                            <button id="musicPrevBtn" onclick="musicManager.prev()" class="w-12 h-12 rounded-full border border-white/20 hover:bg-white hover:text-black transition-all font-black">⟨</button>
+                            <button id="musicPlayBtn" onclick="musicManager.togglePlay()" class="w-16 h-16 rounded-full border-2 border-white hover:bg-white hover:text-black transition-all font-black text-lg">▶</button>
+                            <button id="musicNextBtn" onclick="musicManager.next()" class="w-12 h-12 rounded-full border border-white/20 hover:bg-white hover:text-black transition-all font-black">⟩</button>
+                            <button id="musicLikeBtn" onclick="musicManager.toggleLike()" class="w-12 h-12 rounded-full border border-red-400/50 text-red-300 hover:bg-red-500 hover:text-black transition-all font-black" title="添加红心喜欢">♥</button>
+                        </div>
+
+                        <div class="pt-2 border-t border-white/10">
+                            <div class="flex items-center justify-between text-[10px] font-bold opacity-50 uppercase tracking-widest mb-2">
+                                <span>volume</span>
+                                <span id="musicVolumeLabel">100%</span>
+                            </div>
+                            <input id="musicVolume" type="range" min="0" max="1" step="0.01" value="1" class="w-full cursor-pointer" oninput="musicManager.setVolumeFromUi(this.value)">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 中：当前播放队列 -->
+                <div class="md:col-span-1">
+                    <div class="bg-white/5 rounded-2xl border border-white/10 p-4 h-[60vh] flex flex-col">
+                        <div class="flex items-center justify-between mb-3 px-2">
+                            <span class="text-[10px] font-bold text-cyan-400 uppercase tracking-widest">QUEUE_</span>
+                            <span class="text-[10px] font-bold text-white/40">可拖拽排序</span>
+                        </div>
+                        <div id="musicQueueList" class="custom-scroll overflow-y-auto pr-2 space-y-2 flex-1">
+                            <div class="opacity-30 text-sm">当前播放列表为空。</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 右：歌词滚动 -->
+                <div class="md:col-span-2">
+                    <div class="bg-white/5 rounded-2xl border border-white/10 p-6 h-[60vh] overflow-y-auto custom-scroll">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-[10px] font-bold text-yellow-500 uppercase tracking-widest">LYRICS_</span>
+                            <span id="musicLyricHint" class="text-[10px] font-bold text-white/40">滚动高亮 · 低延迟切歌</span>
+                        </div>
+                        <div id="musicLyrics" class="space-y-3 text-lg font-bold leading-relaxed text-white/70">
+                            <div class="opacity-30">尚未加载歌词。</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SETTINGS 视图 -->
+    <section id="settingsPage" class="view-page overflow-y-auto custom-scroll">
+        <div class="max-w-7xl mx-auto pt-4 pb-20 px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <!-- 列1：视觉与排版 -->
+                <div class="space-y-10">
+                    <div class="text-xl font-bold border-l-4 border-blue-500 pl-3 mb-6">视觉与排版</div>
+                    
+                    <div class="bg-white/5 p-4 rounded-xl border border-white/10">
+                        <label class="text-[10px] font-bold opacity-60 uppercase block mb-3 text-blue-400">优先级主题色彩矩阵</label>
+                        <div class="flex gap-3 items-center mb-2">
+                            <span class="text-xs font-bold w-8 opacity-60">决战</span><input type="color" id="cColor5" class="h-6 w-8 cursor-pointer border-0 p-0 rounded bg-transparent" onchange="app.saveSettings()">
+                            <span class="text-xs font-bold w-8 opacity-60 ml-2">极高</span><input type="color" id="cColor4" class="h-6 w-8 cursor-pointer border-0 p-0 rounded bg-transparent" onchange="app.saveSettings()">
+                            <span class="text-xs font-bold w-8 opacity-60 ml-2">高</span><input type="color" id="cColor3" class="h-6 w-8 cursor-pointer border-0 p-0 rounded bg-transparent" onchange="app.saveSettings()">
+                        </div>
+                        <div class="flex gap-3 items-center">
+                            <span class="text-xs font-bold w-8 opacity-60">中</span><input type="color" id="cColor2" class="h-6 w-8 cursor-pointer border-0 p-0 rounded bg-transparent" onchange="app.saveSettings()">
+                            <span class="text-xs font-bold w-8 opacity-60 ml-2">低</span><input type="color" id="cColor1" class="h-6 w-8 cursor-pointer border-0 p-0 rounded bg-transparent" onchange="app.saveSettings()">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="text-[10px] font-bold opacity-40 uppercase block mb-3">列表优先级展示风格</label>
+                        <select id="priorityStyle" aria-label="优先级展示风格" class="text-lg font-black bg-transparent border-b-2 border-white/10 w-full py-2 outline-none cursor-pointer" onchange="app.saveSettings()">
+                            <option value="bar" class="bg-zinc-900">竖条装饰 (默认)</option>
+                            <option value="block" class="bg-zinc-900">大色块填充</option>
+                            <option value="text" class="bg-zinc-900">名称文字变色</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="text-[10px] font-bold opacity-40 uppercase block mb-3">主页问候语字号微调</label>
+                        <div class="flex items-center gap-4">
+                            <input type="range" id="greetingSize" min="4" max="16" step="0.5" value="8" class="w-full cursor-pointer" oninput="app.updateCSSVars()">
+                            <span id="lblGreeting" class="text-xs font-bold opacity-50">8rem</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold opacity-40 uppercase block mb-3">主页模块网格细分数量 (栏)</label>
+                        <div class="flex items-center gap-4">
+                            <input type="range" id="homeGridCols" min="1" max="12" step="1" value="4" class="w-full cursor-pointer" oninput="app.updateCSSVars()">
+                            <span id="lblHomeGridCols" class="text-xs font-bold opacity-50">4格</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold opacity-40 uppercase block mb-3">主页模块间距 (Gap)</label>
+                        <div class="flex items-center gap-4">
+                            <input type="range" id="homeGridGap" min="0" max="60" step="4" value="24" class="w-full cursor-pointer" oninput="app.updateCSSVars()">
+                            <span id="lblHomeGridGap" class="text-xs font-bold opacity-50">24px</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white/5 p-4 rounded-xl border border-white/10">
+                        <label class="text-[10px] font-bold opacity-60 uppercase block mb-3 text-blue-400">小组件外观高级自定义</label>
+                        <select id="widgetStyleTarget" class="text-sm font-black bg-zinc-900 border border-white/20 w-full py-1 rounded outline-none mb-3 cursor-pointer" onchange="app.loadWidgetStyles()">
+                            <option value="all">全局默认样式 (Global)</option>
+                            <option value="greeting">问候语</option>
+                            <option value="bridge">断点恢复</option>
+                            <option value="ai_flow">AI 每日流</option>
+                            <option value="notes">随手记</option>
+                            <option value="tunes">音乐播放器</option>
+                            <option value="lyrics">歌词面板</option>
+                        </select>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="text-[10px] font-bold opacity-50 block mb-1">边框颜色</label>
+                                <input type="color" id="wgBorderColor" class="h-8 w-full cursor-pointer bg-transparent border-0 p-0" onchange="app.saveWidgetStyles()">
+                            </div>
+                            <div>
+                                <label class="text-[10px] font-bold opacity-50 block mb-1">边框粗细 (<span id="lblWgBorderW">1px</span>)</label>
+                                <input type="range" id="wgBorderWidth" min="0" max="10" step="1" class="w-full cursor-pointer" oninput="document.getElementById('lblWgBorderW').innerText=this.value+'px'; app.saveWidgetStyles()">
+                            </div>
+                            <div>
+                                <label class="text-[10px] font-bold opacity-50 block mb-1">背景颜色</label>
+                                <input type="color" id="wgBgColor" class="h-8 w-full cursor-pointer bg-transparent border-0 p-0" onchange="app.saveWidgetStyles()">
+                            </div>
+                            <div>
+                                <label class="text-[10px] font-bold opacity-50 block mb-1">背景不透明度 (<span id="lblWgBgOp">30%</span>)</label>
+                                <input type="range" id="wgBgOpacity" min="0" max="100" step="5" class="w-full cursor-pointer" oninput="document.getElementById('lblWgBgOp').innerText=this.value+'%'; app.saveWidgetStyles()">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-4">
+                        <div class="flex-1">
+                            <label class="text-[10px] font-bold opacity-40 uppercase block mb-3">倒计时形式</label>
+                            <select id="ddlStyle" aria-label="倒计时形式" class="text-lg font-black bg-transparent border-b-2 border-white/10 w-full py-2 outline-none cursor-pointer" onchange="app.saveSettings()">
+                                <option value="dot" class="bg-zinc-900">阵列点阵图</option>
+                                <option value="text" class="bg-zinc-900">精确数字</option>
+                            </select>
+                        </div>
+                        <div class="flex-1">
+                            <label class="text-[10px] font-bold opacity-40 uppercase block mb-3">最大量词单位</label>
+                            <select id="ddlMaxUnit" aria-label="最大量词单位" class="text-lg font-black bg-transparent border-b-2 border-white/10 w-full py-2 outline-none cursor-pointer" onchange="app.saveSettings()">
+                                <option value="years" class="bg-zinc-900">年</option>
+                                <option value="months" class="bg-zinc-900">月</option>
+                                <option value="days" class="bg-zinc-900">天 (默认)</option>
+                                <option value="hours" class="bg-zinc-900">时</option>
+                                <option value="minutes" class="bg-zinc-900">分</option>
+                                <option value="seconds" class="bg-zinc-900">秒 (极大压迫感)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="bg-white/5 p-4 rounded-xl border border-white/10">
+                        <label class="text-[10px] font-bold opacity-60 uppercase block mb-3">点阵图阵列规模</label>
+                        <div class="mb-4">
+                            <div class="flex justify-between text-xs mb-1 opacity-50 font-bold"><span>行数 (Rows)</span><span id="lblRows">3</span></div>
+                            <input type="range" id="matrixRows" min="1" max="10" step="1" value="3" class="w-full cursor-pointer" oninput="document.getElementById('lblRows').innerText = this.value" onchange="app.saveSettings()">
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs mb-1 opacity-50 font-bold"><span>列数 (Cols)</span><span id="lblCols">66</span></div>
+                            <input type="range" id="matrixCols" min="20" max="100" step="1" value="66" class="w-full cursor-pointer" oninput="document.getElementById('lblCols').innerText = this.value" onchange="app.saveSettings()">
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white/5 p-4 rounded-xl border border-white/10">
+                        <label class="text-[10px] font-bold opacity-60 uppercase block mb-4 text-blue-400">Header 番茄钟布局</label>
+                        <div class="mb-4">
+                            <div class="flex justify-between text-xs mb-1 opacity-50 font-bold"><span>缩放比例</span><span id="lblScale">1x</span></div>
+                            <input type="range" id="headerTimerScale" min="0.5" max="2.0" step="0.1" value="1" class="w-full cursor-pointer" oninput="app.updateCSSVars()">
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs mb-1 opacity-50 font-bold"><span>水平位移</span><span id="lblX">0px</span></div>
+                            <input type="range" id="headerTimerX" min="-500" max="500" step="10" value="0" class="w-full cursor-pointer" oninput="app.updateCSSVars()">
+                        </div>
+                    </div>
+
+                    <div class="bg-red-500/5 p-4 rounded-xl border border-red-500/20">
+                        <label class="text-[10px] font-bold opacity-60 uppercase block mb-4 text-red-400">星标任务 DDL 智能色彩</label>
+                        <div class="flex items-center gap-6">
+                            <div>
+                                <label class="text-xs opacity-50 font-bold block mb-1">常态颜色</label>
+                                <input type="color" id="starDdlColorNormal" value="#ef4444" class="h-8 w-16 bg-transparent cursor-pointer border-0 p-0" oninput="app.updateCSSVars()">
+                            </div>
+                            <div>
+                                <label class="text-xs opacity-50 font-bold block mb-1">专注态颜色</label>
+                                <input type="color" id="starDdlColorRunning" value="#ffffff" class="h-8 w-16 bg-transparent cursor-pointer border-0 p-0" oninput="app.updateCSSVars()">
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2 pt-4">
+                            <input type="checkbox" id="starDdlShadow" checked="" class="w-4 h-4 cursor-pointer" onchange="app.updateCSSVars()">
+                            <label class="text-xs font-bold opacity-80 cursor-pointer" for="starDdlShadow">启用纯黑阴影防刺眼</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 列2：AI 与 Prompts -->
+                <div class="space-y-10 border-l border-white/10 pl-8">
+                    <div class="text-xl font-bold border-l-4 border-purple-500 pl-3 mb-6">AI 神经中枢指令</div>
+
+                    <div>
+                        <label class="text-[10px] font-bold opacity-40 uppercase block mb-3">AI 引擎选择</label>
+                        <select id="aiProvider" class="text-lg font-black bg-transparent border-b-2 border-white/10 w-full py-2 outline-none cursor-pointer" onchange="app.toggleAiSettings()">
+                            <option value="gemini" class="bg-zinc-900">Gemini 2.5</option>
+                            <option value="deepseek" class="bg-zinc-900">DeepSeek API</option>
+                            <option value="ollama" class="bg-zinc-900">Ollama (本地模型)</option>
+                        </select>
+                    </div>
+                    
+                    <div id="cloudApiConfig">
+                        <label class="text-[10px] font-bold opacity-40 uppercase block mb-3">API 密钥</label>
+                        <input type="password" id="apiKey" class="text-lg font-black border-b-2 border-white/10 w-full py-2" placeholder="••••••••" onchange="app.saveSettings()">
+                    </div>
+
+                    <div id="ollamaConfig" class="hidden space-y-6 p-4 border border-purple-500/30 bg-purple-500/5 rounded-xl">
+                        <div>
+                            <label class="text-[10px] font-bold opacity-60 uppercase block mb-2 text-purple-400">Ollama API 地址</label>
+                            <input type="text" id="ollamaUrl" class="text-sm font-bold bg-transparent border-b border-white/20 w-full py-1" value="http://localhost:11434" onchange="app.saveSettings()">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold opacity-60 uppercase block mb-2 text-purple-400">模型名称 (Model)</label>
+                            <input type="text" id="ollamaModel" class="text-sm font-bold bg-transparent border-b border-white/20 w-full py-1" value="llama3" placeholder="例如 llama3, qwen2" onchange="app.saveSettings()">
+                        </div>
+                        <button onclick="ai.testOllama()" class="w-full text-xs font-bold bg-purple-500 hover:bg-purple-400 text-black py-2 rounded transition-colors">测试本地模型连接</button>
+                    </div>
+
+                    <div class="pt-4">
+                        <label class="text-[10px] font-bold opacity-40 uppercase block mb-2">目标拆解提示词 (Review Prompt)</label>
+                        <textarea id="promptReview" class="w-full h-24 bg-white/5 border border-white/10 rounded p-3 text-xs text-white/80 font-mono outline-none focus:border-purple-500 custom-scroll" onblur="app.saveSettings()"></textarea>
+                    </div>
+                    
+                    <div>
+                        <label class="text-[10px] font-bold opacity-40 uppercase block mb-2">每日计划提示词 (Daily Flow Prompt)</label>
+                        <textarea id="promptFlow" class="w-full h-24 bg-white/5 border border-white/10 rounded p-3 text-xs text-white/80 font-mono outline-none focus:border-purple-500 custom-scroll" onblur="app.saveSettings()"></textarea>
+                    </div>
+                </div>
+
+                <!-- 列3：系统与时间 -->
+                <div class="space-y-10 border-l border-white/10 pl-8 flex flex-col">
+                    <div class="text-xl font-bold border-l-4 border-green-500 pl-3 mb-6">系统与外设</div>
+
+                    <div class="bg-white/5 p-4 rounded-xl border border-white/10 space-y-5">
+                        <label class="text-[10px] font-bold opacity-60 uppercase block text-green-400">网易云音乐 API 配置</label>
+                        <div>
+                            <label class="text-[10px] font-bold opacity-40 uppercase block mb-2">网易云音乐 API 地址</label>
+                            <input type="text" id="musicApiUrl" class="text-sm font-bold bg-transparent border-b border-white/20 w-full py-1" value="http://localhost:3000" placeholder="http://localhost:3000" onchange="app.saveSettings()">
+                        </div>
+                        <div class="pt-2 border-t border-white/10">
+                            <label class="text-[10px] font-bold opacity-40 uppercase block mb-2 text-red-300">账号 Cookie (必须)</label>
+                            <input type="password" id="musicCookie" class="text-sm font-bold bg-transparent border-b border-white/20 w-full py-1" value="" placeholder="粘贴完整 Cookie，用于日推/喜欢列表" onchange="app.saveSettings()">
+                            <p class="text-[10px] font-bold opacity-40 leading-relaxed mt-2">提示：该 Cookie 仅保存在本地浏览器缓存（`nf_settings_v5.4`）。</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white/5 p-4 rounded-xl border border-white/10 space-y-5">
+                        <label class="text-[10px] font-bold opacity-60 uppercase block text-blue-400">夺命提醒机制配置</label>
+                        
+                        <div>
+                            <div class="flex justify-between text-xs mb-1 opacity-50 font-bold"><span>首波闪屏时长 (秒)</span><span id="lblAlertDur">3s</span></div>
+                            <input type="range" id="alertDuration" min="1" max="10" step="1" value="3" class="w-full" oninput="document.getElementById('lblAlertDur').innerText = this.value + 's'" onchange="app.saveSettings()">
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs mb-1 opacity-50 font-bold"><span>首波提示音次数</span><span id="lblAlertCount">1次</span></div>
+                            <input type="range" id="alertCount" min="1" max="10" step="1" value="1" class="w-full" oninput="document.getElementById('lblAlertCount').innerText = this.value + '次'" onchange="app.saveSettings()">
+                        </div>
+                        
+                        <div class="pt-2 border-t border-white/10">
+                            <div class="flex justify-between text-xs mb-1 opacity-50 font-bold"><span>专注二次提醒(夺命)间隔</span><span id="lblFocusDelay">5min</span></div>
+                            <input type="range" id="focusDelay" min="1" max="10" step="1" value="5" class="w-full" oninput="document.getElementById('lblFocusDelay').innerText = this.value + 'min'" onchange="app.saveSettings()">
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs mb-1 opacity-50 font-bold"><span>休息二次提醒(夺命)间隔</span><span id="lblRestDelay">90s</span></div>
+                            <input type="range" id="restDelay" min="10" max="300" step="10" value="90" class="w-full" oninput="document.getElementById('lblRestDelay').innerText = this.value + 's'" onchange="app.saveSettings()">
+                        </div>
+
+                        <div class="pt-2 border-t border-white/10">
+                            <div class="mb-3">
+                                <label class="text-[10px] font-bold opacity-40 uppercase block mb-1">主/专注结束提示音</label>
+                                <select id="alertSound" class="text-sm font-black bg-zinc-900 border border-white/20 w-full py-1 rounded outline-none" onchange="app.saveSettings()">
+                                    <option value="preset1">经典清脆音</option>
+                                    <option value="preset2">沉浸厚重音</option>
+                                    <option value="custom">自定义音频</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <div class="flex justify-between text-[10px] font-bold opacity-40 uppercase mb-1"><span>主音量控制</span><span id="lblVolume">100%</span></div>
+                                <input type="range" id="alertVolume" min="0" max="1" step="0.05" value="1" class="w-full cursor-pointer" oninput="app.updateVolumeUI()">
+                            </div>
+                            <div class="mt-3 flex items-center gap-4">
+                                <label class="text-xs font-bold border border-white/20 px-3 py-1 rounded cursor-pointer hover:bg-white hover:text-black transition-all">
+                                    导入音频...
+                                    <input type="file" id="customAudioInput" accept="audio/*" onchange="app.handleAudioUpload(event)">
+                                </label>
+                                <span id="customAudioName" class="text-[10px] font-bold opacity-40">未导入</span>
+                            </div>
+                        </div>
+
+                        <div class="pt-4 border-t border-white/10">
+                            <div class="flex items-center gap-2 mb-3">
+                                <input type="checkbox" id="separateRestAlert" class="w-4 h-4" onchange="app.toggleRestAlertSettings()">
+                                <label class="text-xs font-bold opacity-80 cursor-pointer" for="separateRestAlert">独立配置「休息结束」音效</label>
+                            </div>
+                            <div id="restAlertConfig" class="hidden space-y-3 pl-4 border-l-2 border-green-500/30">
+                                <div>
+                                    <select id="restAlertSound" class="text-sm font-bold bg-zinc-900 border border-white/20 w-full py-1 rounded outline-none" onchange="app.saveSettings()">
+                                        <option value="preset1">经典清脆音</option>
+                                        <option value="preset2">沉浸厚重音</option>
+                                        <option value="custom">自定义音频</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-[10px] opacity-50 font-bold mb-1"><span>休息音量</span><span id="lblRestVolume">100%</span></div>
+                                    <input type="range" id="restAlertVolume" min="0" max="1" step="0.05" value="1" class="w-full" oninput="app.updateVolumeUI()">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-6">
+                        <label class="text-[10px] font-bold opacity-40 uppercase block mb-3">右侧时钟格式</label>
+                        <input type="text" id="clockFormat" class="text-lg font-black border-b-2 border-white/10 w-full py-2" value="MM/DD hh:mm:ss" onchange="app.saveSettings()">
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold opacity-40 uppercase block mb-3">每日起始时间 (触发每日规划)</label>
+                        <input type="time" id="dayStartTime" class="text-lg font-black bg-transparent border-b-2 border-white/10 w-full py-2 outline-none" value="06:00" onchange="app.saveSettings()">
+                    </div>
+
+                    <div class="flex-1"></div>
+                    <div class="pt-8">
+                        <button onclick="app.downloadApp()" class="w-full py-4 border-2 border-white/20 font-black text-lg hover:bg-white hover:text-black transition-all rounded-xl shadow-[0_0_15px_rgba(255,255,255,0.1)]">下载独立离线版 .HTML</button>
+                        <p class="text-[10px] opacity-40 leading-relaxed font-bold mt-3 text-center">所有逻辑与数据均保存在浏览器缓存中，文件完全独立且隐私安全。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <audio id="audioPreset1" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3"></audio>
+    <audio id="audioPreset2" src="https://assets.mixkit.co/active_storage/sfx/1000/1000-preview.mp3"></audio>
+    <audio id="audioCustom"></audio>
+
+        <script src="js/state.js"></script>
+    <script src="js/timer.js"></script>
+    <script src="js/library.js"></script>
+    <script src="js/music.js"></script>
+    <script src="js/ai.js"></script>
+    <script src="js/app.js"></script>
+
+</body></html>
