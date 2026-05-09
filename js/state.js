@@ -17,6 +17,36 @@
             tasks: JSON.parse(localStorage.getItem('nf_tasks_v5.4')) || JSON.parse(localStorage.getItem('nf_tasks_v5.3')) || [],
             activeTaskId: null,
             homeModules: JSON.parse(localStorage.getItem('nf_home_modules_v5.4')) || DEFAULT_HOME_MODULES,
+            storeItems: (() => {
+                try {
+                    const raw = localStorage.getItem('nf_store_v5.4') || localStorage.getItem('nf_store_v5.3');
+                    return raw ? JSON.parse(raw) : [];
+                } catch (error) {
+                    console.warn('store load failed', error);
+                    return [];
+                }
+            })(),
+            storeView: localStorage.getItem('nf_store_view_v5.4') || 'shop',
+            storeFormVisible: (() => {
+                try {
+                    const raw = localStorage.getItem('nf_store_form_visible_v5.4');
+                    return raw ? JSON.parse(raw) : false;
+                } catch (error) {
+                    console.warn('storeFormVisible load failed', error);
+                    return false;
+                }
+            })(),
+            coins: (() => {
+                try {
+                    const raw = localStorage.getItem('nf_coins_v5.4');
+                    if (!raw) return 0;
+                    const parsed = JSON.parse(raw);
+                    return typeof parsed === 'number' ? parsed : (parsed?.coins || 0);
+                } catch (error) {
+                    console.warn('coin load failed', error);
+                    return 0;
+                }
+            })(),
             timer: {
                 focusSecs: 25 * 60, restSecs: 5 * 60, timeLeft: 25 * 60,
                 status: 'idle', mode: 'focus', interval: null, reminderTimeout: null, soundInterval: null, soundCount: 0, targetSoundCount: 1
@@ -65,6 +95,16 @@
             createdAt: t.createdAt || Date.now(), currentBridge: t.currentBridge || "", 
             bridgeHistory: t.bridgeHistory || [], isStarred: !!t.isStarred,
             ddl: t.ddl || null, ddlHasTime: t.ddlHasTime !== undefined ? t.ddlHasTime : (t.ddl ? true : false)
+        }));
+
+        state.storeItems = (state.storeItems || []).map(item => ({
+            ...item,
+            price: Math.round((Number(item.price) || 0) * 100) / 100,
+            image: item.image || '',
+            purchased: !!item.purchased,
+            status: item.status || 'active',
+            deletedAt: item.deletedAt || null,
+            createdAt: item.createdAt || Date.now()
         }));
 
         document.addEventListener('click', (e) => {

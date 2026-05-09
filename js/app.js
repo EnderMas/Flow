@@ -4,6 +4,7 @@
             isHomeDeleteMode: false,
             draggingHomeId: null,
             homeResizeSession: null,
+            debugClickMode: true,
 
             init() {
                 timer.init(); 
@@ -75,8 +76,14 @@
                 }
 
                 musicManager.init();
+                this.purgeDeletedStoreItems();
                 this.showView('home');
-                library.renderList(); 
+                library.renderList();
+
+                const storeToggleBtn = document.getElementById('storeToggleFormBtn');
+                if (storeToggleBtn) storeToggleBtn.addEventListener('click', () => this.toggleStoreNewItemForm());
+                const libraryAddProjectBtn = document.getElementById('libraryAddProjectBtn');
+                if (libraryAddProjectBtn) libraryAddProjectBtn.addEventListener('click', (e) => { e.preventDefault(); library.addProject(); });
             },
 
             saveHomeModules() {
@@ -462,13 +469,255 @@
                 this.saveSettings();
             },
 
+            saveStoreState() {
+                localStorage.setItem('nf_store_v5.4', JSON.stringify(state.storeItems));
+                localStorage.setItem('nf_store_view_v5.4', state.storeView);
+                localStorage.setItem('nf_store_form_visible_v5.4', JSON.stringify(state.storeFormVisible));
+            },
+
+            saveCoinBalance() {
+                state.coins = Math.round((state.coins || 0) * 100) / 100;
+                localStorage.setItem('nf_coins_v5.4', JSON.stringify(state.coins));
+                const balanceEl = document.getElementById('storeCoinBalance');
+                if (balanceEl) balanceEl.innerText = state.coins.toFixed(2);
+            },
+
+            setStoreTab(tab) {
+                const valid = ['shop', 'showcase', 'trash'];
+                if (!valid.includes(tab)) return;
+                state.storeView = tab;
+                localStorage.setItem('nf_store_view_v5.4', tab);
+                this.renderStorePage();
+            },
+
+            purgeDeletedStoreItems() {
+                const now = Date.now();
+                const threshold = 15 * 24 * 60 * 60 * 1000;
+                const beforeCount = state.storeItems.length;
+                state.storeItems = state.storeItems.filter(item => {
+                    if (item.status !== 'deleted') return true;
+                    if (!item.deletedAt) return true;
+                    return now - item.deletedAt <= threshold;
+                });
+                if (state.storeItems.length !== beforeCount) {
+                    this.saveStoreState();
+                }
+            },
+
+            deleteStoreItem(id) {
+                const item = state.storeItems.find(i => `${i.id}` === `${id}`);
+                if (!item) return;
+                item.status = 'deleted';
+                item.deletedAt = Date.now();
+                item.purchased = false;
+                this.saveStoreState();
+                this.renderStorePage();
+            },
+
+            formatMoney(value) {
+                const num = Number(value || 0);
+                if (Number.isNaN(num)) return '0';
+                const rounded = Math.round(num * 100) / 100;
+                return Number.isInteger(rounded) ? `${rounded}` : rounded.toFixed(2);
+            },
+
+            preventDefault(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            },
+
+            toggleDebugClicks() {
+                this.debugClickMode = !this.debugClickMode;
+                console.log(`app.debugClickMode = ${this.debugClickMode}`);
+            },
+
+            toggleStoreNewItemForm() {
+                const form = document.getElementById('storeNewItemForm');
+                if (form) {
+                    const isHidden = form.classList.contains('hidden');
+                    state.storeFormVisible = isHidden;
+                    this.saveStoreState();
+                    if (isHidden) {
+                        form.classList.remove('hidden');
+                        form.style.display = 'block';
+                    } else {
+                        form.classList.add('hidden');
+                        form.style.display = 'none';
+                    }
+                }
+            },
+
+            loadStoreImage(file) {
+                if (!file || !file.type.startsWith('image/')) return alert('请上传有效的图片文件。');
+                const reader = new FileReader();
+                reader.onload = (evt) => {
+                    this.pendingStoreImage = evt.target.result;
+                    const preview = document.getElementById('storeItemPreview');
+                    if (preview) preview.innerHTML = `<img src="${this.pendingStoreImage}" class="w-full h-full object-cover rounded-2xl" alt="预览" />`;
+                };
+                reader.readAsDataURL(file);
+            },
+
+            handleStoreImageUpload(e) {
+                const file = e.target.files?.[0];
+                if (!file) return;
+                this.loadStoreImage(file);
+            },
+
+            handleStoreImageDrop(e) {
+                this.preventDefault(e);
+                const file = e.dataTransfer?.files?.[0];
+                if (!file) return;
+                this.loadStoreImage(file);
+            },
+
+            addStoreItem() {
+                const nameEl = document.getElementById('storeItemName');
+                const priceEl = document.getElementById('storeItemPrice');
+                if (!nameEl || !priceEl) return;
+                const name = nameEl.value.trim();
+                const price = parseFloat(priceEl.value.trim());
+                if (!name) return alert('请填写商品名称');
+                if (Number.isNaN(price) || price <= 0) return alert('请输入有效价格');
+                const item = {
+                    id: `item_${Date.now()}`,
+                    name,
+                    price: Math.round(price * 100) / 100,
+                    image: this.pendingStoreImage || '',
+                    purchased: false,
+                    status: 'active',
+                    deletedAt: null,
+                    createdAt: Date.now()
+                };
+                state.storeItems.unshift(item);
+                this.saveStoreState();
+                this.renderStorePage();
+                const form = document.getElementById('storeNewItemForm');
+                if (form) form.classList.add('hidden');
+                nameEl.value = '';
+                priceEl.value = '';
+                this.pendingStoreImage = null;
+                const preview = document.getElementById('storeItemPreview');
+                if (preview) preview.innerHTML = '<div class="text-sm font-bold">拖动图片到这里</div><div class="text-xs opacity-50">或点击选择文件</div>';
+            },
+
+            purchaseStoreItem(id) {
+                const item = state.storeItems.find(i => `${i.id}` === `${id}`);
+                if (!item) return;
+                if (item.purchased) return;
+                if (state.coins < item.price) {
+                    alert('金币不足，先完成任务归档获取更多金币。');
+                    return;
+                }
+                state.coins -= item.price;
+                item.purchased = true;
+                this.saveCoinBalance();
+                this.saveStoreState();
+                this.renderStorePage();
+                const card = document.getElementById(`store-item-${item.id}`);
+                if (card) {
+                    card.classList.add('ring-2', 'ring-emerald-400');
+                    setTimeout(() => { card.classList.remove('ring-2', 'ring-emerald-400'); }, 1200);
+                }
+            },
+
+            renderStorePage() {
+                const balanceEl = document.getElementById('storeCoinBalance');
+                if (balanceEl) balanceEl.innerText = (state.coins || 0).toFixed(2);
+                const listEl = document.getElementById('storeItemList');
+                const messageEl = document.getElementById('storeMessage');
+                const formEl = document.getElementById('storeNewItemForm');
+                if (formEl) {
+                    if (state.storeFormVisible) {
+                        formEl.classList.remove('hidden');
+                        formEl.style.display = 'block';
+                    } else {
+                        formEl.classList.add('hidden');
+                        formEl.style.display = 'none';
+                    }
+                }
+                if (!listEl) return;
+
+                const tab = state.storeView || 'shop';
+                document.querySelectorAll('.store-subtab').forEach(btn => {
+                    btn.classList.toggle('opacity-100', btn.dataset.tab === tab);
+                    btn.classList.toggle('opacity-40', btn.dataset.tab !== tab);
+                    btn.classList.toggle('border-white/20', btn.dataset.tab === tab);
+                });
+
+                const now = Date.now();
+                const items = state.storeItems.filter(item => {
+                    if (tab === 'shop') return item.status === 'active' && !item.purchased;
+                    if (tab === 'showcase') return item.status === 'active' && item.purchased;
+                    return item.status === 'deleted';
+                });
+
+                const infoMap = {
+                    shop: '商品架中显示当前可购买商品。购买后它们会移入展示柜。',
+                    showcase: '展示柜中显示你已购买的商品。可删除至垃圾桶。',
+                    trash: '垃圾桶中的商品会被保存 15 天，之后自动永久清理。'
+                };
+                if (messageEl) {
+                    messageEl.innerText = `${infoMap[tab] || ''} 当前 ${items.length} 件。`;
+                }
+
+                if (!items.length) {
+                    const emptyTips = tab === 'shop'
+                        ? '商店空空如也，先上架一个新物品吧。'
+                        : tab === 'showcase'
+                            ? '展示柜中暂无已购买物品。'
+                            : '垃圾桶空空如也。';
+                    listEl.innerHTML = `<div class="opacity-30 text-sm font-bold text-center col-span-full">${emptyTips}</div>`;
+                    return;
+                }
+
+                listEl.innerHTML = items.map(item => {
+                    const purchased = !!item.purchased;
+                    const canBuy = !purchased && state.coins >= item.price;
+                    const deletedDays = item.deletedAt ? Math.floor((now - item.deletedAt) / (24 * 60 * 60 * 1000)) : 0;
+                    const leftDays = Math.max(0, 15 - deletedDays);
+                    const badge = tab === 'showcase'
+                        ? '<div class="text-xs text-white/60 uppercase tracking-[0.2em]">已购买</div>'
+                        : tab === 'trash'
+                            ? `<div class="text-xs text-white/60 uppercase tracking-[0.2em]">将于 ${leftDays} 天后永久清理</div>`
+                            : '';
+                    const imageHtml = item.image
+                        ? `<img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover transition-transform duration-500 ${tab === 'trash' ? 'brightness-90' : purchased ? 'scale-[1.05] brightness-75' : 'hover:scale-105'}" />`
+                        : `<div class="w-full h-full bg-white/5 flex items-center justify-center text-white/40 font-bold uppercase tracking-[0.15em]">无图商品</div>`;
+
+                    return `
+                        <div id="store-item-${item.id}" class="relative overflow-hidden rounded-[2rem] border border-white/10 shadow-lg shadow-black/20 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.1),_transparent_45%)]">
+                            <button type="button" onclick="app.deleteStoreItem('${item.id}')" class="absolute right-4 top-4 z-20 w-10 h-10 rounded-full bg-black/60 text-white hover:bg-red-500 transition-all">×</button>
+                            <div class="h-64 overflow-hidden">
+                                ${imageHtml}
+                            </div>
+                            <div class="p-5 flex flex-col gap-4">
+                                <div class="flex items-center justify-between gap-4">
+                                    <div>
+                                        <div class="text-[10px] uppercase tracking-[0.4em] opacity-50">ITEM</div>
+                                        <div class="text-2xl font-black uppercase mt-2">${item.name}</div>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="text-xs uppercase opacity-50">价格</div>
+                                        <div class="text-3xl font-black">${this.formatMoney(item.price)}<span class="text-base">金币</span></div>
+                                    </div>
+                                </div>
+                                ${badge}
+                                ${tab === 'shop'
+                                    ? `<button type="button" onclick="app.purchaseStoreItem('${item.id}')" class="ml-auto w-16 h-16 rounded-full ${canBuy ? 'bg-emerald-400 text-black hover:bg-emerald-300' : 'bg-white/10 text-white/40 cursor-not-allowed'} border border-white/10 transition-all flex items-center justify-center text-2xl">✔</button>`
+                                    : ''}
+                            </div>
+                        </div>`;
+                }).join('');
+            },
+
             showView(v) {
-                if (state.view === 'library') library.select(state.activeTaskId);
+                if (state.view === 'library' && window.library) window.library.select(state.activeTaskId);
                 state.view = v;
                 document.querySelectorAll('.view-page').forEach(el => el.classList.add('hidden'));
                 document.getElementById(`${v}Page`).classList.remove('hidden');
 
-                const titleMap = { 'home': '主页', 'library': '库', 'pomodoro': '番茄钟', 'music': '音乐控制台', 'settings': '设置', 'history': '历史归档' };
+                const titleMap = { 'home': '主页', 'library': '库', 'pomodoro': '番茄钟', 'music': '音乐控制台', 'store': '商店', 'settings': '设置', 'history': '历史归档' };
                 document.getElementById('activeTabTitle').innerText = (titleMap[v] || v).toUpperCase();
                 
                 document.querySelectorAll('.nav-btn').forEach(b => { b.classList.remove('active'); if(b.dataset.view === v) b.classList.add('active'); });
@@ -476,6 +725,7 @@
                 if (v === 'pomodoro') this.updateChain();
                 else if (v === 'home') this.renderHomeModules();
                 else if (v === 'music') musicManager.init();
+                else if (v === 'store') this.renderStorePage();
                 
                 this.syncTheme(); timer.render(); 
             },
@@ -515,6 +765,19 @@
             jumpToLibraryAndFocusBridge(e) { if(e) e.stopPropagation(); this.showView('library'); setTimeout(() => { const input = document.getElementById('inlineBridgeInput'); if(input) input.focus(); }, 300); },
 
             handleGlobalClick(e) {
+                if (this.debugClickMode) {
+                    const nav = e.target.closest('button.nav-btn');
+                    const path = e.composedPath ? e.composedPath().map(el => el?.tagName?.toLowerCase ? el.tagName.toLowerCase() : el).slice(0, 6) : [];
+                    console.log('handleGlobalClick', {
+                        view: state.view,
+                        storeView: state.storeView,
+                        target: e.target.tagName,
+                        hasButton: !!e.target.closest('button'),
+                        hasNav: !!nav,
+                        navView: nav?.dataset?.view,
+                        path
+                    });
+                }
                 const addMenu = document.getElementById('homeAddMenu');
                 if (addMenu && !addMenu.classList.contains('hidden') && !e.target.closest('#homeAddMenu') && !e.target.closest('#homeAddModuleBtn')) {
                     addMenu.classList.add('hidden');

@@ -585,11 +585,12 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 
         <div class="flex items-center pointer-events-auto ml-auto shrink-0">
             <div class="flex gap-8 items-center pt-2 shrink-0" id="navLinks">
-                <span class="nav-btn text-sm uppercase font-bold tracking-widest cursor-pointer opacity-40 hover:opacity-100 transition-all" data-view="home" onclick="app.showView('home')">主页</span>
-                <span class="nav-btn text-sm uppercase font-bold tracking-widest cursor-pointer opacity-40 hover:opacity-100 transition-all" data-view="library" onclick="app.showView('library')">库</span>
-                <span class="nav-btn text-sm uppercase font-bold tracking-widest cursor-pointer opacity-40 hover:opacity-100 transition-all" data-view="pomodoro" onclick="app.showView('pomodoro')">番茄钟</span>
-                <span class="nav-btn text-sm uppercase font-bold tracking-widest cursor-pointer opacity-40 hover:opacity-100 transition-all" data-view="music" onclick="app.showView('music')">音乐</span>
-                <span class="nav-btn text-sm uppercase font-bold tracking-widest cursor-pointer opacity-40 hover:opacity-100 transition-all active" data-view="settings" onclick="app.showView('settings')">设置</span>
+                <button type="button" class="nav-btn text-sm uppercase font-bold tracking-widest cursor-pointer opacity-40 hover:opacity-100 transition-all bg-transparent border-none" data-view="home" onclick="app.showView('home')">主页</button>
+                <button type="button" class="nav-btn text-sm uppercase font-bold tracking-widest cursor-pointer opacity-40 hover:opacity-100 transition-all bg-transparent border-none" data-view="library" onclick="app.showView('library')">库</button>
+                <button type="button" class="nav-btn text-sm uppercase font-bold tracking-widest cursor-pointer opacity-40 hover:opacity-100 transition-all bg-transparent border-none" data-view="pomodoro" onclick="app.showView('pomodoro')">番茄钟</button>
+                <button type="button" class="nav-btn text-sm uppercase font-bold tracking-widest cursor-pointer opacity-40 hover:opacity-100 transition-all bg-transparent border-none" data-view="music" onclick="app.showView('music')">音乐</button>
+                <button type="button" class="nav-btn text-sm uppercase font-bold tracking-widest cursor-pointer opacity-40 hover:opacity-100 transition-all bg-transparent border-none" data-view="store" onclick="app.showView('store')">商店</button>
+                <button type="button" class="nav-btn text-sm uppercase font-bold tracking-widest cursor-pointer opacity-40 hover:opacity-100 transition-all active bg-transparent border-none" data-view="settings" onclick="app.showView('settings')">设置</button>
             </div>
             <div id="sysClock" class="flex flex-col opacity-90 border-l border-white/20 pl-8 ml-8 shrink-0 w-44">
                 <div class="flex justify-between items-center w-full text-white/60 text-xs font-bold tracking-widest mb-1">
@@ -662,7 +663,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                                 <div class="text-xs font-bold hover:bg-white/10 p-2 rounded cursor-pointer" onclick="library.setSortMethod('created')">创建时间</div>
                             </div>
                         </div>
-                        <button onclick="library.addProject()" class="text-sm font-black uppercase hover:opacity-70 text-blue-400 ml-2">+ 新建项目</button>
+                        <button id="libraryAddProjectBtn" type="button" onclick="library.addProject()" class="text-sm font-black uppercase hover:opacity-70 text-blue-400 ml-2">+ 新建项目</button>
                     </div>
                 </div>
             </div>
@@ -728,6 +729,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                             <div class="flex gap-1" id="priorityStarsContainer"></div>
                             <span id="priorityText" class="text-xs font-bold text-white/60 ml-2 w-10"></span>
                         </div>
+                        <div id="expectedCoinDisplay" class="text-xs font-bold text-emerald-300 uppercase tracking-[0.2em]">预计: 0.00 金币</div>
                         <p class="text-xs text-red-300/80 font-bold hidden pl-20" id="aiReviewOutput"></p>
                     </div>
                 </div>
@@ -738,6 +740,26 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                         <span class="text-[10px] font-bold border border-white/20 px-3 py-1 rounded hover:bg-white hover:text-black transition-all cursor-pointer" onclick="app.showHistoryPage()">历史归档</span>
                     </div>
                     <textarea id="inlineBridgeInput" class="w-full bg-yellow-500/5 border border-yellow-500/20 rounded-xl p-4 text-base text-white font-bold outline-none focus:border-yellow-500 focus:bg-yellow-500/10 transition-colors resize-none placeholder:text-yellow-500/30 custom-scroll" rows="3" placeholder="在此记录此时的上下文断点... (当你点击下方开始专注时，此日志将自动归档)" onblur="library.saveInlineBridge()"></textarea>
+                </div>
+
+                <div id="archiveReviewPanel" class="hidden border border-white/10 rounded-3xl bg-white/5 p-6 mt-6 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-[10px] uppercase tracking-[0.22em] opacity-50">项目回顾</div>
+                            <div class="text-sm font-bold text-white/70 mt-2">填写你的感想、难点与难度评级，确认后项目将进入归档。</div>
+                        </div>
+                        <div class="text-xs uppercase tracking-[0.2em] opacity-40">1元 = 1 金币</div>
+                    </div>
+                    <textarea id="archiveReviewNote" class="w-full bg-transparent border border-white/20 rounded-2xl p-4 text-sm text-white outline-none resize-none h-28" placeholder="输入你的项目感想、完成感受和遇到的难点。"></textarea>
+                    <div class="flex items-center gap-4">
+                        <span class="text-[10px] font-bold uppercase opacity-50">难度评级</span>
+                        <input id="archiveDifficulty" type="range" min="0" max="100" value="50" class="flex-1" oninput="library.updateArchiveDifficultyLabel(this.value)" onwheel="library.scrollArchiveDifficulty(event)">
+                        <span id="archiveDifficultyValue" class="text-sm font-black cursor-ns-resize" title="滚轮滑动调整难度" onwheel="library.scrollArchiveDifficulty(event)">50</span>
+                    </div>
+                    <div class="flex flex-wrap gap-3">
+                        <button onclick="library.confirmArchiveProjectReview()" class="px-6 py-3 rounded-full bg-emerald-500 text-black font-black uppercase tracking-widest hover:bg-emerald-400 transition-all">确认归档</button>
+                        <button onclick="library.cancelArchiveReview()" class="px-6 py-3 rounded-full border border-white/20 text-white font-black uppercase tracking-widest hover:bg-white/10 transition-all">取消</button>
+                    </div>
                 </div>
 
                 <div class="pt-2">
@@ -910,6 +932,52 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                             <div class="opacity-30">尚未加载歌词。</div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STORE 视图 -->
+    <section id="storePage" class="view-page hidden overflow-y-auto custom-scroll">
+        <div class="max-w-7xl mx-auto pt-4 pb-20 px-8">
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
+                <div>
+                    <h2 class="huge-text text-5xl md:text-6xl uppercase tracking-widest">STORE_ 商店</h2>
+                    <p class="text-sm font-bold text-white/40 mt-2">用金币兑换现实物品权利。完成任务归档可获得更多金币。</p>
+                </div>
+                <div class="rounded-full border border-white/10 bg-white/5 px-5 py-3 text-right">
+                    <div class="text-[10px] uppercase tracking-[0.25em] opacity-50">当前金币</div>
+                    <div class="text-4xl font-black text-emerald-300" id="storeCoinBalance">0</div>
+                </div>
+            </div>
+
+            <div id="storeMessage" class="text-sm font-bold text-emerald-300 mb-4 min-h-[1.5rem]"></div>
+            <div class="flex flex-wrap gap-3 mb-6">
+                <button type="button" class="store-subtab text-xs uppercase font-black tracking-widest px-4 py-2 rounded-full border border-white/10 bg-white/5 opacity-100" data-tab="shop" onclick="app.setStoreTab('shop')">商品架</button>
+                <button type="button" class="store-subtab text-xs uppercase font-black tracking-widest px-4 py-2 rounded-full border border-white/10 bg-white/5 opacity-40" data-tab="showcase" onclick="app.setStoreTab('showcase')">展示柜</button>
+                <button type="button" class="store-subtab text-xs uppercase font-black tracking-widest px-4 py-2 rounded-full border border-white/10 bg-white/5 opacity-40" data-tab="trash" onclick="app.setStoreTab('trash')">垃圾桶</button>
+            </div>
+            <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3" id="storeItemList"></div>
+
+            <div class="border border-white/10 rounded-3xl bg-white/5 p-6 mt-10">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="text-sm font-bold uppercase tracking-[0.2em] opacity-50">上架物品</div>
+                    <button id="storeToggleFormBtn" type="button" onclick="app.toggleStoreNewItemForm()" class="text-[10px] font-black uppercase px-4 py-2 border border-white/20 rounded hover:bg-white/10 transition-all">切换上架表单</button>
+                </div>
+                <div id="storeNewItemForm" class="space-y-4 hidden">
+                    <div class="grid gap-4 md:grid-cols-2">
+                        <input id="storeItemName" type="text" placeholder="名称，例如：棉花娃娃" class="bg-transparent border border-white/20 rounded-xl p-4 text-sm text-white outline-none">
+                        <input id="storeItemPrice" type="number" min="0.01" step="0.01" placeholder="价格 / 元" class="bg-transparent border border-white/20 rounded-xl p-4 text-sm text-white outline-none">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold uppercase opacity-50">商品图片</label>
+                        <input id="storeItemImageInput" type="file" accept="image/*" class="hidden" onchange="app.handleStoreImageUpload(event)">
+                        <div id="storeItemPreview" class="rounded-2xl border border-white/10 overflow-hidden bg-white/5 h-40 flex flex-col items-center justify-center text-white/40 cursor-pointer transition-all hover:border-emerald-400" ondragover="app.preventDefault(event)" ondrop="app.handleStoreImageDrop(event)" onclick="document.getElementById('storeItemImageInput').click()" title="拖拽图片到此处，或点击选择文件">
+                            <div class="text-sm font-bold">拖动图片到这里</div>
+                            <div class="text-xs opacity-50">或点击选择文件</div>
+                        </div>
+                    </div>
+                    <button type="button" onclick="app.addStoreItem()" class="w-full rounded-full bg-emerald-500 text-black font-black uppercase tracking-widest py-4 hover:bg-emerald-400 transition-all">上架商品</button>
                 </div>
             </div>
         </div>

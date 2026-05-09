@@ -1,6 +1,7 @@
 // --- 库引擎 ---
         let draggedListIndex = null; let draggedStepIndex = null;
         const library = {
+            currentReviewTaskId: null,
             toggleSortMenu(e) { e.stopPropagation(); document.getElementById('sortDropdown').classList.toggle('hidden'); },
             setSortMethod(method) { state.settings.sortMethod = method; app.saveSettings(); document.getElementById('sortDropdown').classList.add('hidden'); },
             toggleSortOrder() {
@@ -73,7 +74,8 @@
                 this.save(); this.renderList(); updateClock();
             },
 
-            addProject() {
+            addProject(e) {
+                if (e && e.preventDefault) e.preventDefault();
                 this.setFilter('active'); const id = Date.now(); const d = new Date(); d.setHours(23, 59, 59, 999);
                 state.tasks.unshift({ id, title: '新建项目', status: 'active', weight: 2, extDdl: "", steps: [{text: '第一步动作', done: false}], isNew: true, ddl: d.getTime(), ddlHasTime: false, createdAt: id, currentBridge: "", bridgeHistory: [], isStarred: false });
                 this.save(); this.select(id); setTimeout(() => document.getElementById('editTitle').focus(), 50);
@@ -88,9 +90,10 @@
                 
                 task.isNew = false;
                 document.getElementById('libPlaceholder').classList.add('hidden'); document.getElementById('libActive').classList.remove('hidden');
+                const reviewPanel = document.getElementById('archiveReviewPanel'); if (reviewPanel) reviewPanel.classList.add('hidden'); this.currentReviewTaskId = null;
                 document.getElementById('editTitle').innerText = task.title; document.getElementById('editExtDdl').value = task.extDdl || ""; document.getElementById('inlineBridgeInput').value = task.currentBridge || "";
 
-                this.renderStars(task.weight); this.updateDdlUi(); this.resetAiButton(); this.renderSteps(); this.renderList(); this.save(); updateClock();
+                this.renderStars(task.weight); this.updateDdlUi(); this.resetAiButton(); this.renderSteps(); this.updateExpectedCoinDisplay(task); this.renderList(); this.save(); updateClock();
             },
 
             saveInlineBridge() {
@@ -120,7 +123,7 @@
                     case 'year': d.setFullYear(num); break; case 'month': d.setMonth(num - 1); break; case 'date': d.setDate(num); break;
                     case 'hour': t.ddlHasTime = true; d.setHours(num); break; case 'minute': t.ddlHasTime = true; d.setMinutes(num); break;
                 }
-                t.ddl = d.getTime(); this.save(); this.updateDdlUi(); this.renderList(); updateClock();
+                t.ddl = d.getTime(); this.save(); this.updateDdlUi(); this.renderList(); this.updateExpectedCoinDisplay(t); updateClock();
             },
 
             scrollDdl(e, type) {
@@ -133,7 +136,7 @@
                     case 'hour': t.ddlHasTime = true; if(document.getElementById('ddlHour').innerText === '--') d.setHours(12); d.setHours(d.getHours() + sign); break;
                     case 'minute': t.ddlHasTime = true; if(document.getElementById('ddlMinute').innerText === '--') { d.setHours(12); d.setMinutes(0); } d.setMinutes(d.getMinutes() + sign * 1); break;
                 }
-                t.ddl = d.getTime(); this.save(); this.updateDdlUi(); this.renderList(); updateClock();
+                t.ddl = d.getTime(); this.save(); this.updateDdlUi(); this.renderList(); this.updateExpectedCoinDisplay(t); updateClock();
             },
 
             clearDdl() { const t = state.tasks.find(x => x.id === state.activeTaskId); if(t) { t.ddl = null; t.ddlHasTime = false; this.save(); this.updateDdlUi(); this.renderList(); updateClock(); } },
@@ -149,11 +152,95 @@
                 document.getElementById('priorityText').style.color = state.settings.priorityColors[weight];
             },
 
-            setWeight(val) { const t = state.tasks.find(x => x.id === state.activeTaskId); if(t) { t.weight = val; this.save(); this.renderStars(val); this.renderList(); app.updateHomeBridge(); updateClock(); } },
+            setWeight(val) { const t = state.tasks.find(x => x.id === state.activeTaskId); if(t) { t.weight = val; this.save(); this.renderStars(val); this.renderList(); this.updateExpectedCoinDisplay(t); app.updateHomeBridge(); updateClock(); } },
             resetAiButton() { const icon = document.getElementById('aiReviewIcon'); icon.innerText = '✨'; icon.classList.remove('spinning'); document.getElementById('aiReviewOutput').classList.add('hidden'); },
             saveTitle() { const t = state.tasks.find(x => x.id === state.activeTaskId); if (t) { t.title = document.getElementById('editTitle').innerText || '未命名项目'; this.save(); this.renderList(); app.updateHomeBridge(); updateClock(); } },
             saveAttrs() { const t = state.tasks.find(x => x.id === state.activeTaskId); if (!t) return; t.extDdl = document.getElementById('editExtDdl').value; this.save(); this.renderList(); updateClock(); app.updateHomeBridge(); },
-            archiveProject() { const t = state.tasks.find(x => x.id === state.activeTaskId); if(t) { t.status = 'archived'; this.save(); this.setFilter('active'); app.updateHomeBridge(); } },
+            archiveProject() {
+                const t = state.tasks.find(x => x.id === state.activeTaskId);
+                if (!t) return;
+                this.currentReviewTaskId = t.id;
+                const panel = document.getElementById('archiveReviewPanel');
+                if (!panel) return;
+                document.getElementById('archiveReviewNote').value = t.reviewNote || '';
+                const diff = t.reviewDifficulty !== undefined ? t.reviewDifficulty : 50;
+                const slider = document.getElementById('archiveDifficulty');
+                if (slider) slider.value = diff;
+                const label = document.getElementById('archiveDifficultyValue');
+                if (label) label.innerText = diff;
+                this.updateExpectedCoinDisplay(t);
+                panel.classList.remove('hidden');
+                const steps = document.getElementById('libSteps');
+                if (steps) steps.classList.add('opacity-50');
+                panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            },
+            confirmArchiveProjectReview() {
+                const task = state.tasks.find(x => x.id === this.currentReviewTaskId);
+                if (!task) return;
+                const note = document.getElementById('archiveReviewNote')?.value.trim() || '';
+                const difficulty = parseInt(document.getElementById('archiveDifficulty')?.value, 10) || 0;
+                task.reviewNote = note;
+                task.reviewDifficulty = difficulty;
+                task.completedAt = Date.now();
+                const coins = this.calculateArchiveCoins(task);
+                task.archiveCoins = coins;
+                task.status = 'archived';
+                state.coins = Math.round(((state.coins || 0) + coins) * 100) / 100;
+                this.save(); app.saveCoinBalance(); this.setFilter('active'); app.updateHomeBridge();
+                this.hideArchiveReview();
+                alert(`归档成功，获得 ${coins.toFixed(2)} 金币！`);
+            },
+            cancelArchiveReview() {
+                this.hideArchiveReview();
+            },
+            hideArchiveReview() {
+                const panel = document.getElementById('archiveReviewPanel');
+                if (panel) panel.classList.add('hidden');
+                const steps = document.getElementById('libSteps');
+                if (steps) steps.classList.remove('opacity-50');
+                this.currentReviewTaskId = null;
+            },
+            calculateArchiveCoins(task) {
+                const difficulty = Math.max(0, Number(task.reviewDifficulty || 0));
+                if (difficulty === 0) return 0;
+                const now = Date.now();
+                const timeRemaining = task.ddl ? Math.max(0, task.ddl - now) : 0;
+                const deadlineScore = task.ddl ? Math.min(1, timeRemaining / (21 * 24 * 60 * 60 * 1000)) : 0.5;
+                const priorityScore = Math.min(1, Math.max(0, ((task.weight || 2) - 1) / 4));
+                const complexityScore = Math.min(1, (((task.steps?.length || 1) - 1) + ((task.pomodoroCount || 0) / 2)) / 8);
+                const reviewScore = Math.min(1, Math.max(0, difficulty / 100));
+                const weightedTotal = deadlineScore * 0.2 + priorityScore * 0.1 + complexityScore * 0.2 + reviewScore * 0.5;
+                const base = difficulty / 8;
+                const modifier = 0.7 + weightedTotal * 0.6;
+                const coins = base * modifier;
+                return Math.round(coins * 100) / 100;
+            },
+            updateArchiveDifficultyLabel(val) {
+                const label = document.getElementById('archiveDifficultyValue');
+                if (label) label.innerText = val;
+                const task = state.tasks.find(x => x.id === this.currentReviewTaskId || x.id === state.activeTaskId);
+                if (task) this.updateExpectedCoinDisplay(task);
+            },
+            getExpectedArchiveCoins(task) {
+                if (!task) return 0;
+                const previewTask = { ...task, reviewDifficulty: Number(task.reviewDifficulty || document.getElementById('archiveDifficulty')?.value || task.reviewDifficulty || 0) };
+                return this.calculateArchiveCoins(previewTask);
+            },
+            updateExpectedCoinDisplay(task) {
+                const display = document.getElementById('expectedCoinDisplay');
+                if (!display) return;
+                const expected = this.getExpectedArchiveCoins(task);
+                display.innerText = `预计: ${expected.toFixed(2)} 金币`;
+            },
+            scrollArchiveDifficulty(e) {
+                e.preventDefault();
+                const slider = document.getElementById('archiveDifficulty');
+                if (!slider) return;
+                const delta = e.deltaY < 0 ? 1 : -1;
+                const next = Math.min(100, Math.max(0, parseInt(slider.value, 10) + delta));
+                slider.value = next;
+                this.updateArchiveDifficultyLabel(next);
+            },
             deleteProject() { const t = state.tasks.find(x => x.id === state.activeTaskId); if(t) { t.status = 'deleted'; this.save(); this.setFilter('active'); app.updateHomeBridge(); } },
             renderSteps() {
                 const task = state.tasks.find(t => t.id === state.activeTaskId); if(!task) return;
@@ -168,6 +255,7 @@
                         <div contenteditable="true" id="stepInput_${i}" class="flex-1 bg-transparent outline-none editable-line font-bold break-words min-h-[1.5em] py-1 ${s.done ? 'line-through opacity-30' : ''}" onblur="library.updateStep(${i}, this.innerText)" onkeydown="if(event.key==='Enter' && !event.shiftKey){event.preventDefault(); this.blur(); library.addStep();}">${s.text}</div>
                         <div class="opacity-0 group-hover:opacity-100 flex gap-4 pr-2"><i class="hover-icon text-red-400 text-xl font-bold leading-none" onclick="library.delStep(${i})">×</i></div>
                     </div>`).join('');
+                this.updateExpectedCoinDisplay(task);
             },
 
             addStep() { 
@@ -208,8 +296,9 @@
             delStep(i) { const t = state.tasks.find(x => x.id === state.activeTaskId); if (t) { t.steps.splice(i, 1); this.save(); this.renderSteps(); app.updateChain(); } },
             
             dragListStart(e, i) { draggedListIndex = i; e.dataTransfer.effectAllowed = 'move'; e.target.classList.add('dragging'); }, dragListOver(e) { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; },
-            dragListDrop(e, targetIdx) { e.preventDefault(); if (state.settings.sortMethod === 'custom' && draggedListIndex !== null && draggedListIndex !== targetIdx) { const sorted = this.getSortedTasks(); const movedId = sorted[draggedListIndex].id; const targetId = sorted[targetIdx].id; const aIdx = state.tasks.findIndex(t => t.id === movedId); const [moved] = state.tasks.splice(aIdx, 1); const newTargetIdx = state.tasks.findIndex(t => t.id === targetId); state.tasks.splice(newTargetIdx, 0, moved); this.save(); this.renderList(); } draggedListIndex = null; }, dragListEnd(e) { e.target.classList.remove('dragging'); draggedListIndex = null; },
-            
+dragListDrop(e, targetIdx) { e.preventDefault(); if (state.settings.sortMethod === 'custom' && draggedListIndex !== null && draggedListIndex !== targetIdx) { const sorted = this.getSortedTasks(); const movedId = sorted[draggedListIndex].id; const targetId = sorted[targetIdx].id; const aIdx = state.tasks.findIndex(t => t.id === movedId); const [moved] = state.tasks.splice(aIdx, 1); const newTargetIdx = state.tasks.findIndex(t => t.id === targetId); state.tasks.splice(newTargetIdx, 0, moved); this.save(); this.renderList(); } draggedListIndex = null; },
+            dragListEnd(e) { e.target.classList.remove('dragging'); draggedListIndex = null; },
+
             dragStepStart(e, i) { draggedStepIndex = i; e.dataTransfer.effectAllowed = 'move'; e.target.parentElement.classList.add('dragging'); }, dragStepOver(e) { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; },
             dragStepDrop(e, targetIdx) { e.preventDefault(); if (draggedStepIndex !== null && draggedStepIndex !== targetIdx) { const t = state.tasks.find(x => x.id === state.activeTaskId); const [moved] = t.steps.splice(draggedStepIndex, 1); t.steps.splice(targetIdx, 0, moved); this.save(); this.renderSteps(); app.updateChain(); } draggedStepIndex = null; }, dragStepEnd(e) { e.target.parentElement.classList.remove('dragging'); draggedStepIndex = null; },
 
