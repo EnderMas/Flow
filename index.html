@@ -553,7 +553,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 })();</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FLOW / NEXUS</title>
+    <title>FLOW</title>
     <script src="https://cdn.tailwindcss.com"></script>
     
 <link href="https://cdn.jsdelivr.net/npm/gridstack@10.1.1/dist/gridstack.min.css" rel="stylesheet"/>
@@ -626,7 +626,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                 </button>
             </div>
             
-            <div class="text-[10px] font-bold opacity-30 uppercase tracking-widest">Nexus Flow Layout Engine</div>
+            <div class="text-[10px] font-bold opacity-30 uppercase tracking-widest">HAVE A NICE DAY ;)</div>
         </div>
 
         <div class="flex-1 w-full overflow-y-auto overflow-x-hidden px-4 md:px-8 pb-32 pt-4">
@@ -663,7 +663,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                                 <div class="text-xs font-bold hover:bg-white/10 p-2 rounded cursor-pointer" onclick="library.setSortMethod('created')">创建时间</div>
                             </div>
                         </div>
-                        <button id="libraryAddProjectBtn" type="button" onclick="library.addProject()" class="text-sm font-black uppercase hover:opacity-70 text-blue-400 ml-2">+ 新建项目</button>
+                        <button id="libraryAddProjectBtn" type="button" class="text-sm font-black uppercase hover:opacity-70 text-blue-400 ml-2">+ 新建项目</button>
                     </div>
                 </div>
             </div>
@@ -681,7 +681,10 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                     <div class="flex items-center gap-4 flex-shrink-0 ml-auto mt-2 md:mt-0">
                         <div id="detailDdlDisplay" class="font-bold text-red-500 bg-red-500/10 px-3 py-1 rounded tracking-widest hidden text-right"></div>
                         <div class="flex gap-2 opacity-50 hover:opacity-100 transition-opacity">
-                        <button onclick="library.archiveProject()" class="p-2 border border-white/20 hover:bg-white hover:text-black transition-all rounded" title="归档"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>
+                      <button id="taskActionBtn" onclick="library.archiveProject()" class="p-2 border border-white/20 hover:bg-white hover:text-black transition-all rounded flex items-center gap-2" title="归档">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg>
+                        <span id="taskActionLabel" class="text-[10px] font-bold tracking-widest uppercase">归档</span>
+                      </button>
                         <button onclick="library.deleteProject()" class="p-2 border border-red-500/50 text-red-400 hover:bg-red-500 hover:text-white transition-all rounded" title="删除"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"></path></svg></button>
                     </div>
                 </div>
@@ -697,7 +700,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                 <div class="grid grid-cols-2 gap-8 border-b border-white/10 pb-6 mt-2">
                     <div class="space-y-6">
                         <div class="flex items-center gap-4">
-                            <span class="text-[10px] font-bold opacity-40 uppercase w-16 shrink-0">截止日期:</span>
+                        <span id="ddlLabel" class="text-[10px] font-bold opacity-40 uppercase w-16 shrink-0">截止日期:</span>
                             <div class="flex items-center text-sm font-bold bg-white/5 border border-white/20 rounded pl-2 select-none">
                                 <button onclick="library.clearDdl()" class="mr-2 opacity-30 hover:opacity-100 hover:text-red-400 transition-all text-lg leading-none" title="一键清除 DDL">✕</button>
                                 <span class="opacity-20 mr-2">|</span>
@@ -729,10 +732,65 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                             <div class="flex gap-1" id="priorityStarsContainer"></div>
                             <span id="priorityText" class="text-xs font-bold text-white/60 ml-2 w-10"></span>
                         </div>
+                      <div class="flex items-center gap-2">
+                        <span class="text-[10px] font-bold opacity-40 uppercase w-16 shrink-0">项目种类:</span>
+                        <div class="flex items-center gap-1 bg-white/5 border border-white/20 p-1 rounded-xl">
+                          <button id="taskTypeBtn_default" type="button" onclick="library.switchTaskType('default')" class="px-3 py-1 text-[10px] font-bold uppercase rounded-lg border border-transparent transition-all">默认</button>
+                          <button id="taskTypeBtn_daily" type="button" onclick="library.switchTaskType('daily')" class="px-3 py-1 text-[10px] font-bold uppercase rounded-lg border border-transparent transition-all">日常</button>
+                          <button id="taskTypeBtn_activity" type="button" onclick="library.switchTaskType('activity')" class="px-3 py-1 text-[10px] font-bold uppercase rounded-lg border border-transparent transition-all">活动</button>
+                        </div>
+                      </div>
                         <div id="expectedCoinDisplay" class="text-xs font-bold text-emerald-300 uppercase tracking-[0.2em]">预计: 0.00 金币</div>
                         <p class="text-xs text-red-300/80 font-bold hidden pl-20" id="aiReviewOutput"></p>
                     </div>
                 </div>
+
+                  <div id="dailyTaskPanel" class="hidden grid grid-cols-1 md:grid-cols-3 gap-4 border-b border-white/10 pb-6 mt-2">
+                    <div class="flex items-center gap-3">
+                      <span class="text-[10px] font-bold opacity-40 uppercase">频率</span>
+                      <input id="dailyFrequencyValue" type="number" min="1" value="1" title="日常任务频率数值" placeholder="1" class="w-20 bg-white/5 border border-white/20 rounded px-2 py-1 text-sm font-bold outline-none" onblur="library.saveDailySettings()" onkeydown="if(event.key==='Enter') this.blur()">
+                      <select id="dailyFrequencyUnit" title="日常任务频率单位" class="bg-white/5 border border-white/20 rounded px-2 py-1 text-sm font-bold outline-none" onchange="library.saveDailySettings()">
+                        <option value="hour">时</option>
+                        <option value="day">天</option>
+                        <option value="week">周</option>
+                      </select>
+                    </div>
+                    <div class="flex items-center gap-3">
+                      <span class="text-[10px] font-bold opacity-40 uppercase">出现次数</span>
+                      <button type="button" class="px-2 py-1 border border-white/20 rounded" onclick="library.adjustDailyOccurrences(-1)">-</button>
+                      <span id="dailyOccurrences" class="text-sm font-black min-w-[2ch] text-center" onwheel="library.adjustDailyOccurrences(event.deltaY < 0 ? 1 : -1)">∞</span>
+                      <button type="button" class="px-2 py-1 border border-white/20 rounded" onclick="library.adjustDailyOccurrences(1)">+</button>
+                    </div>
+                    <div class="flex items-center justify-start md:justify-end">
+                      <span id="dailyProgressText" class="text-xs font-bold text-emerald-300 uppercase tracking-[0.15em]">打卡进度: 0/∞</span>
+                    </div>
+                  </div>
+
+                  <div id="activityTaskPanel" class="hidden border-b border-white/10 pb-6 mt-2 space-y-4">
+                    <div class="flex items-center gap-3">
+                      <span class="text-[10px] font-bold opacity-40 uppercase w-20 shrink-0">活动链接</span>
+                      <div id="activityLinkInputWrap" class="flex-1 flex items-center gap-2">
+                        <input id="activityLinkInput" type="url" placeholder="https://..." class="flex-1 bg-white/5 border border-white/20 rounded px-3 py-2 text-sm font-bold outline-none" onblur="library.saveActivityLink()" onkeydown="if(event.key==='Enter') this.blur()">
+                      </div>
+                      <div id="activityLinkViewWrap" class="flex-1 hidden items-center gap-2">
+                        <a id="activityLinkView" href="#" target="_blank" rel="noopener noreferrer" title="打开活动链接" class="text-sm font-bold text-sky-300 underline truncate">未设置链接</a>
+                      </div>
+                      <div id="activityLinkEditWrap" class="hidden">
+                        <button type="button" onclick="library.toggleActivityLinkEdit()" class="px-2 py-2 border border-white/20 rounded hover:bg-white/10" title="编辑链接">✎</button>
+                      </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                      <span class="text-[10px] font-bold opacity-40 uppercase w-20 shrink-0 pt-2">活动总结</span>
+                      <textarea id="activitySummaryInput" rows="3" class="flex-1 bg-white/5 border border-white/20 rounded px-3 py-2 text-sm font-bold outline-none resize-none" placeholder="输入活动说明..." onblur="library.saveActivityAttrs()"></textarea>
+                    </div>
+                    <div class="flex items-center gap-3">
+                      <span class="text-[10px] font-bold opacity-40 uppercase w-20 shrink-0">关联任务</span>
+                      <div class="flex-1 flex items-center gap-2">
+                        <button id="activityLinkedTasksBtn" type="button" class="flex-shrink-0 text-sm font-bold bg-white/5 border border-white/20 rounded px-3 py-2 hover:bg-white/10 transition-all" onclick="library.openActivitySelector()">选择关联任务</button>
+                        <div id="activityLinkedList" class="flex-1 flex flex-wrap gap-2"></div>
+                      </div>
+                    </div>
+                  </div>
 
                 <div class="space-y-2 border-b border-white/10 pb-6 mt-2 relative">
                     <div class="flex justify-between items-center mb-2">
@@ -757,7 +815,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                         <span id="archiveDifficultyValue" class="text-sm font-black cursor-ns-resize" title="滚轮滑动调整难度" onwheel="library.scrollArchiveDifficulty(event)">50</span>
                     </div>
                     <div class="flex flex-wrap gap-3">
-                        <button onclick="library.confirmArchiveProjectReview()" class="px-6 py-3 rounded-full bg-emerald-500 text-black font-black uppercase tracking-widest hover:bg-emerald-400 transition-all">确认归档</button>
+                      <button id="confirmArchiveBtn" onclick="library.confirmArchiveProjectReview()" class="px-6 py-3 rounded-full bg-emerald-500 text-black font-black uppercase tracking-widest hover:bg-emerald-400 transition-all">确认归档</button>
                         <button onclick="library.cancelArchiveReview()" class="px-6 py-3 rounded-full border border-white/20 text-white font-black uppercase tracking-widest hover:bg-white/10 transition-all">取消</button>
                     </div>
                 </div>
@@ -960,10 +1018,10 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3" id="storeItemList"></div>
 
             <div class="border border-white/10 rounded-3xl bg-white/5 p-6 mt-10">
-                <div class="flex items-center justify-between mb-6">
-                    <div class="text-sm font-bold uppercase tracking-[0.2em] opacity-50">上架物品</div>
-                    <button id="storeToggleFormBtn" type="button" onclick="app.toggleStoreNewItemForm()" class="text-[10px] font-black uppercase px-4 py-2 border border-white/20 rounded hover:bg-white/10 transition-all">切换上架表单</button>
-                </div>
+              <div class="flex items-center justify-between mb-6">
+                <div class="text-sm font-bold uppercase tracking-[0.2em] opacity-50">上架物品</div>
+                <button id="storeToggleFormBtn" type="button" class="text-[10px] font-black uppercase px-4 py-2 border border-white/20 rounded hover:bg-white/10 transition-all">切换上架表单</button>
+              </div>
                 <div id="storeNewItemForm" class="space-y-4 hidden">
                     <div class="grid gap-4 md:grid-cols-2">
                         <input id="storeItemName" type="text" placeholder="名称，例如：棉花娃娃" class="bg-transparent border border-white/20 rounded-xl p-4 text-sm text-white outline-none">
@@ -1281,5 +1339,20 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
     <script src="js/music.js"></script>
     <script src="js/ai.js"></script>
     <script src="js/app.js"></script>
+
+  <!-- Activity selector modal -->
+  <div id="activitySelectorModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-6">
+    <div class="w-full max-w-2xl bg-zinc-900 border border-white/10 rounded-xl p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="text-lg font-black">选择活动（可多选）</div>
+        <button onclick="document.getElementById('activitySelectorModal').classList.add('hidden')" class="text-sm px-3 py-1 border border-white/10 rounded">关闭</button>
+      </div>
+      <div id="activitySelectorList" class="max-h-60 overflow-y-auto custom-scroll space-y-2 mb-4"></div>
+      <div class="flex justify-end gap-3">
+        <button onclick="library.saveActivitySelection()" class="px-4 py-2 bg-emerald-500 text-black font-black rounded">保存</button>
+        <button onclick="document.getElementById('activitySelectorModal').classList.add('hidden')" class="px-4 py-2 border border-white/10 rounded">取消</button>
+      </div>
+    </div>
+  </div>
 
 </body></html>

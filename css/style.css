@@ -195,6 +195,18 @@
         @keyframes spin { 100% { transform: rotate(360deg); } }
         .spinning { animation: spin 1s linear infinite; display: inline-block; }
 
+        @keyframes activityFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .task-activity-glow {
+            background-image: linear-gradient(120deg, rgba(251, 207, 232, 0.18), rgba(191, 219, 254, 0.2), rgba(254, 249, 195, 0.2), rgba(209, 250, 229, 0.2));
+            background-size: 150% 150%;
+            border-color: rgba(255, 255, 255, 0.25) !important;
+            animation: activityFlow 4s linear infinite;
+        }
+
         .dot-matrix { display: grid; gap: 2px; width: max-content; justify-content: end; margin-left: auto; }
         .dot { width: 5px; height: 5px; border-radius: 1px; transition: background-color 0.3s; }
         .ddl-part { padding: 0 2px; border-radius: 2px; transition: all 0.2s; outline: none; }

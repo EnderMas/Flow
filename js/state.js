@@ -11,10 +11,25 @@
             { id: 'lyrics', type: 'lyrics', colSpan: 2, rowSpan: 2, hidden: false }
         ];
 
+        function storageGetJson(primaryKey, fallbackValue, fallbackKeys = []) {
+            try {
+                const raw = localStorage.getItem(primaryKey);
+                if (raw) return JSON.parse(raw);
+                for (const key of fallbackKeys) {
+                    const nextRaw = localStorage.getItem(key);
+                    if (nextRaw) return JSON.parse(nextRaw);
+                }
+                return fallbackValue;
+            } catch (error) {
+                console.warn('storage parse failed', primaryKey, error);
+                return fallbackValue;
+            }
+        }
+
         const state = {
             view: 'home',
             libraryFilter: 'active', 
-            tasks: JSON.parse(localStorage.getItem('nf_tasks_v5.4')) || JSON.parse(localStorage.getItem('nf_tasks_v5.3')) || [],
+            tasks: storageGetJson('nf_tasks_v5.5', [], ['nf_tasks_v5.4', 'nf_tasks_v5.3']),
             activeTaskId: null,
             homeModules: JSON.parse(localStorage.getItem('nf_home_modules_v5.4')) || DEFAULT_HOME_MODULES,
             storeItems: (() => {
@@ -94,7 +109,28 @@
             steps: (t.steps || []).map(s => typeof s === 'string' ? { text: s, done: false } : s),
             createdAt: t.createdAt || Date.now(), currentBridge: t.currentBridge || "", 
             bridgeHistory: t.bridgeHistory || [], isStarred: !!t.isStarred,
-            ddl: t.ddl || null, ddlHasTime: t.ddlHasTime !== undefined ? t.ddlHasTime : (t.ddl ? true : false)
+            ddl: t.ddl || null, ddlHasTime: t.ddlHasTime !== undefined ? t.ddlHasTime : (t.ddl ? true : false),
+            type: t.type || 'default',
+            daily: {
+                startAt: t.daily?.startAt || t.ddl || null,
+                hasTime: t.daily?.hasTime !== undefined ? !!t.daily.hasTime : (t.ddl ? !!t.ddlHasTime : false),
+                frequencyValue: Math.max(1, parseInt(t.daily?.frequencyValue, 10) || 1),
+                frequencyUnit: ['hour', 'day', 'week'].includes(t.daily?.frequencyUnit) ? t.daily.frequencyUnit : 'day',
+                occurrences: (() => {
+                    const parsed = parseInt(t.daily?.occurrences, 10);
+                    if (Number.isNaN(parsed)) return -1;
+                    return Math.max(-1, parsed);
+                })(),
+                checkmarks: Array.isArray(t.daily?.checkmarks) ? t.daily.checkmarks : [],
+                nextAt: t.daily?.nextAt || null,
+                canUndo: !!t.daily?.canUndo,
+                undoCheckpoint: t.daily?.undoCheckpoint || null
+            },
+            activity: {
+                link: t.activity?.link || '',
+                summary: t.activity?.summary || '',
+                linkedTaskIds: Array.isArray(t.activity?.linkedTaskIds) ? t.activity.linkedTaskIds : []
+            }
         }));
 
         state.storeItems = (state.storeItems || []).map(item => ({
@@ -116,6 +152,26 @@
 
         // --- DDL 计算 ---
         function renderDdlUi(task, nowTime) {
+            if (task?.type === 'daily') {
+                const doneCount = task.daily?.checkmarks?.length || 0;
+                const occurrences = parseInt(task.daily?.occurrences, 10);
+                if (occurrences !== -1 && doneCount >= Math.max(0, occurrences || 0)) {
+                    return { html: `<span class="text-xs font-bold text-black bg-emerald-400 px-2 py-1 rounded">已完成</span>`, txt: '已完成' };
+                }
+                if (task.daily?.canUndo) {
+                    return { html: `<span class="text-xs font-bold text-emerald-300 bg-emerald-500/10 px-2 py-1 rounded">已打卡</span>`, txt: '已打卡' };
+                }
+                if (task.daily?.nextAt && task.daily.nextAt > nowTime) {
+                    const next = new Date(task.daily.nextAt);
+                    const m = String(next.getMonth() + 1).padStart(2, '0');
+                    const d = String(next.getDate()).padStart(2, '0');
+                    const h = String(next.getHours()).padStart(2, '0');
+                    const min = String(next.getMinutes()).padStart(2, '0');
+                    const text = `下次 ${m}/${d} ${h}:${min}`;
+                    return { html: `<span class="text-xs font-bold text-emerald-300 bg-emerald-500/10 px-2 py-1 rounded">${text}</span>`, txt: text };
+                }
+                return { html: `<span class="text-xs font-bold text-emerald-300 bg-emerald-500/10 px-2 py-1 rounded">进行中</span>`, txt: '进行中' };
+            }
             if (!task.ddl || !task.ddlHasTime) return { html: '', txt: '' };
             const diff = task.ddl - nowTime;
             const style = state.settings.ddlStyle || 'dot';
@@ -187,7 +243,7 @@
             if (state.activeTaskId && state.view === 'library') {
                 const task = state.tasks.find(t => t.id === state.activeTaskId);
                 const ddlData = renderDdlUi(task, nowTime);
-                if(task && task.ddl && task.ddlHasTime) {
+                if(task && task.type !== 'daily' && task.ddl && task.ddlHasTime) {
                     ddlDetail.innerHTML = ddlData.txt;
                     ddlDetail.classList.remove('hidden');
                 } else ddlDetail.classList.add('hidden');
@@ -195,7 +251,7 @@
 
             const starredTask = state.tasks.find(t => t.isStarred && t.status === 'active');
             const headerStar = document.getElementById('headerStarredTask');
-            if(starredTask && starredTask.ddl && starredTask.ddlHasTime) {
+            if(starredTask && starredTask.type !== 'daily' && starredTask.ddl && starredTask.ddlHasTime) {
                 document.getElementById('headerStarTitleText').innerText = starredTask.title;
                 document.getElementById('headerStarIcon').style.color = state.settings.priorityColors[starredTask.weight] || '#ffffff';
                 document.getElementById('headerStarDdl').innerText = renderDdlUi(starredTask, nowTime).txt;
